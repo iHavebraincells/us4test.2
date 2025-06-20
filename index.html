@@ -2,42 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bashW</title>
   <link rel="icon" href="/static/logo.png" type="image/png" />
   <style>
     body {
       margin: 0;
-      padding: 0;
-      color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
       background: black;
-      background-repeat: no-repeat;
-      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+      text-align: center;
     }
 
     nav {
-      background: rgba(0, 0, 0, 0.5);
+      background: #111;
       padding: 10px;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
       display: flex;
       justify-content: center;
       gap: 20px;
     }
 
-    nav a {
+    nav button {
+      background: #222;
+      border: none;
       color: white;
-      text-decoration: none;
-      font-weight: bold;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1em;
     }
 
     section {
       display: none;
-      padding-top: 80px;
+      padding: 30px;
     }
 
     section.active {
@@ -47,11 +44,11 @@
     .snowflake {
       position: fixed;
       top: -10px;
+      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
       animation: fall linear infinite;
-      z-index: 0;
     }
 
     @keyframes fall {
@@ -61,53 +58,50 @@
 
     .game-grid {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 20px;
-      margin-top: 40px;
     }
 
-    .game-tile {
+    .game-card {
       background: #222;
       padding: 10px;
-      border-radius: 10px;
+      border: 1px solid #444;
       width: 200px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
     }
 
-    .game-tile:hover {
-      transform: scale(1.05);
-    }
-
-    .game-tile img {
+    .game-card img {
       width: 100%;
-      border-radius: 8px;
+      height: auto;
+      cursor: pointer;
     }
 
     iframe {
       width: 90%;
       height: 600px;
       border: none;
-      margin: 20px auto;
-      display: block;
+      margin-top: 20px;
     }
 
-    .setting-group {
-      margin-top: 30px;
+    label {
+      font-size: 1.2em;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-left: 10px;
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('games')">Games</a>
-    <a href="#" onclick="showSection('apps')">Apps</a>
-    <a href="#" onclick="showSection('credits')">Credits</a>
-    <a href="#" onclick="showSection('updates')">Update Log</a>
-    <a href="#" onclick="showSection('settings')">Settings</a>
-    <a href="#" onclick="panic()">Panic</a>
+    <button onclick="showTab('home')">Home</button>
+    <button onclick="showTab('games')">Games</button>
+    <button onclick="showTab('apps')">Apps</button>
+    <button onclick="showTab('credits')">Credits</button>
+    <button onclick="showTab('updates')">Update Log</button>
+    <button onclick="showTab('settings')">Settings</button>
   </nav>
 
   <section id="home" class="active">
@@ -117,104 +111,132 @@
 
   <section id="games">
     <h1>Games</h1>
-    <div class="game-grid">
-      <div class="game-tile" onclick="loadGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">
-        <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
-        <p>Basket Hoop</p>
-      </div>
-    </div>
-    <div id="game-container"></div>
+    <div class="game-grid" id="gameGrid"></div>
+    <div id="gameFrameContainer"></div>
   </section>
 
   <section id="apps">
     <h1>Apps</h1>
-    <p>Coming soon!</p>
+    <h3>Calculator</h3>
+    <input id="calcInput" placeholder="2+2" />
+    <button onclick="document.getElementById('calcResult').textContent = eval(document.getElementById('calcInput').value)">Run</button>
+    <p id="calcResult"></p>
+
+    <h3>JavaScript Executor</h3>
+    <textarea id="jsExec" rows="5" cols="40" placeholder="alert('Hello!')"></textarea><br/>
+    <button onclick="eval(document.getElementById('jsExec').value)">Execute</button>
   </section>
 
   <section id="credits">
-    <h1 style="font-size: 2.5em;">credits to us4 team and bash working on #bashW</h1>
+    <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
   </section>
 
   <section id="updates">
     <h1>Update Log</h1>
-    <ul style="text-align:left; max-width:600px; margin:auto;">
-      <li>✔ Basket Hoop embedded in-page</li>
-      <li>✔ Anti-close confirmation added</li>
-      <li>✔ Game images clickable</li>
-      <li>✔ Background toggle in Settings</li>
+    <ul>
+      <li>✔️ Added multiple games with thumbnails</li>
+      <li>✔️ Anti-tab-close added to Settings</li>
+      <li>✔️ JS Executor & Calculator added to Apps</li>
     </ul>
   </section>
 
   <section id="settings">
     <h1>Settings</h1>
-    <div class="setting-group">
-      <p>Background Style:</p>
-      <label><input type="radio" name="bg" value="snow" checked> Snow (Default)</label><br>
-      <label><input type="radio" name="bg" value="custom"> ReaperPlays Avatar</label>
-    </div>
-    <div class="setting-group">
-      <p>Prevent Tab Close:</p>
-      <label><input type="checkbox" id="preventClose"> Enable Warning</label>
-    </div>
+    <label>Anti-Tab-Close Protection
+      <input type="checkbox" id="protectClose" onchange="toggleTabProtection(this.checked)">
+    </label>
   </section>
 
-  <!-- SNOW SCRIPT -->
+  <!-- Snowfall -->
   <script>
     function createSnowflake() {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.textContent = "❄";
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
+      const snow = document.createElement("div");
+      snow.className = "snowflake";
+      snow.textContent = "❄";
+      snow.style.left = Math.random() * window.innerWidth + "px";
+      snow.style.fontSize = Math.random() * 10 + 10 + "px";
+      snow.style.animationDuration = Math.random() * 5 + 2 + "s";
+      document.body.appendChild(snow);
+      setTimeout(() => snow.remove(), 7000);
     }
-    let snowInterval = setInterval(createSnowflake, 100);
+    setInterval(createSnowflake, 100);
   </script>
 
-  <!-- SECTION & SETTINGS SCRIPT -->
+  <!-- Tabs -->
   <script>
-    const body = document.body;
-    let confirmTabClose = false;
+    function showTab(tabId) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      document.getElementById("gameFrameContainer").innerHTML = ""; // reset game viewer
+    }
+  </script>
 
-    document.querySelectorAll('input[name="bg"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.value === 'custom') {
-          clearInterval(snowInterval);
-          document.querySelectorAll('.snowflake').forEach(e => e.remove());
-          body.style.backgroundImage = "url('https://yt3.googleusercontent.com/XsGPReVtEzgz2d7kSa7MvJBxPhyvrkSsMrjFtU_Nm0YyERXoLIJ0sRUVQDBz201Gs30lRhxerA=s160-c-k-c0x00ffffff-no-rj')";
-        } else {
-          body.style.backgroundImage = "none";
-          snowInterval = setInterval(createSnowflake, 100);
-        }
-      });
-    });
-
-    document.getElementById('preventClose').addEventListener('change', function () {
-      confirmTabClose = this.checked;
-    });
-
-    window.addEventListener('beforeunload', function (e) {
-      if (confirmTabClose) {
-        e.preventDefault();
-        e.returnValue = 'Are you sure you want to close this tab?';
+  <!-- Game Cards -->
+  <script>
+    const games = [
+      {
+        title: "Apocalypse Truck",
+        embed: "https://cloud.onlinegames.io/games/2021/1/apocalypse-truck/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/1015/responsive/apocalypse-truck-xs.jpg"
+      },
+      {
+        title: "Kick the Pirate",
+        embed: "https://cloud.onlinegames.io/games/2022/construct/92/kick-the-pirate/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/1012/responsive/Kick-The-Pirate-xs.jpg"
+      },
+      {
+        title: "Julie Beauty Salon",
+        embed: "https://cloud.onlinegames.io/games/2021/1/julie-beauty-salon/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/1011/responsive/Julie-Beauty-Salon-xs.jpg"
+      },
+      {
+        title: "Mini Cars Racing",
+        embed: "https://cloud.onlinegames.io/games/2021/unity/mini-cars-racing/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/1010/responsive/Mini-Cars-Racing-xs.jpg"
+      },
+      {
+        title: "Pyramid Solitaire",
+        embed: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html#pyramid",
+        image: "https://www.onlinegames.io/media/posts/1006/responsive/pyramid-Solitaire-xs.jpg"
+      },
+      {
+        title: "Solitaire",
+        embed: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/1007/responsive/solitaire-xs.jpg"
+      },
+      {
+        title: "Drift King",
+        embed: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html",
+        image: "https://www.onlinegames.io/media/posts/729/responsive/Drift-King-xs.jpg"
       }
+    ];
+
+    const gameGrid = document.getElementById("gameGrid");
+    games.forEach(game => {
+      const div = document.createElement("div");
+      div.className = "game-card";
+      div.innerHTML = `<img src="${game.image}" alt="${game.title}" onclick="loadGame('${game.embed}')"><p>${game.title}</p>`;
+      gameGrid.appendChild(div);
     });
-
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
-
-    function panic() {
-      window.location.href = "https://classroom.google.com";
-    }
 
     function loadGame(url) {
-      const container = document.getElementById("game-container");
-      container.innerHTML = `<iframe src="${url}"></iframe>`;
+      document.getElementById("gameFrameContainer").innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
     }
+  </script>
+
+  <!-- Anti Tab Close -->
+  <script>
+    let tabProtect = false;
+    function toggleTabProtection(enabled) {
+      tabProtect = enabled;
+    }
+
+    window.addEventListener("beforeunload", function (e) {
+      if (tabProtect) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
   </script>
 
 </body>
