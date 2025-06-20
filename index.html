@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,52 +15,38 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
       overflow-x: hidden;
-    }
-
-    nav {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav button {
-      background: none;
-      border: 1px solid white;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    nav button:hover {
-      background: white;
-      color: black;
-    }
-
-    .page {
-      display: none;
-      padding: 60px 20px;
-    }
-
-    .page.active {
-      display: block;
+      text-align: center;
     }
 
     h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
+      font-size: 3rem;
+      margin-top: 40px;
     }
 
-    p {
+    .tab-button {
+      background-color: #222;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      border-radius: 5px;
+    }
+
+    .tab-button:hover {
+      background-color: #444;
+    }
+
+    .tab-content {
+      display: none;
+      margin-top: 30px;
       font-size: 1.5em;
+    }
+
+    .tab-content.active {
+      display: block;
     }
 
     .snowflake {
@@ -74,32 +60,64 @@
     }
 
     @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .panic-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+
+    .panic-button:hover {
+      background: darkred;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('credits')">Credits</button>
-  </nav>
+  <button class="panic-button" onclick="panic()">Panic</button>
 
-  <div id="home" class="page active">
-    <h1>Welcome to bashW</h1>
-    <p>Unblock the web with style.</p>
+  <h1>Welcome to bashW</h1>
+  <p>Unblock the web with style.</p>
+
+  <div>
+    <button class="tab-button" onclick="showTab('home')">Home</button>
+    <button class="tab-button" onclick="showTab('games')">Games</button>
+    <button class="tab-button" onclick="showTab('credits')">Credits</button>
   </div>
 
-  <div id="credits" class="page">
-    <h1>credits to us4 team and bash working on #bashW</h1>
+  <div id="home" class="tab-content active">
+    <p>This is the Home tab.</p>
+  </div>
+
+  <div id="games" class="tab-content">
+    <p>Games coming soon!</p>
+  </div>
+
+  <div id="credits" class="tab-content">
+    <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
   </div>
 
   <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
     }
 
     function createSnowflake() {
@@ -114,6 +132,10 @@
     }
 
     setInterval(createSnowflake, 100);
+
+    function panic() {
+      window.location.href = "https://classroom.google.com"; // or google.com or whatever you want
+    }
   </script>
 </body>
 </html>
