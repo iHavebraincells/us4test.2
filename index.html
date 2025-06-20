@@ -21,32 +21,36 @@
 
     h1 {
       font-size: 3rem;
-      margin-top: 40px;
+      margin-top: 60px;
     }
 
-    .tab-button {
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      padding: 60px 20px;
+      border-top: 2px solid white;
+    }
+
+    .button {
+      display: inline-block;
       background-color: #222;
+      border: 2px solid white;
       color: white;
-      border: none;
-      padding: 10px 20px;
+      padding: 15px 30px;
       margin: 10px;
-      cursor: pointer;
-      font-size: 1em;
-      border-radius: 5px;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.2s;
     }
 
-    .tab-button:hover {
-      background-color: #444;
-    }
-
-    .tab-content {
-      display: none;
-      margin-top: 30px;
-      font-size: 1.5em;
-    }
-
-    .tab-content.active {
-      display: block;
+    .button:hover {
+      background-color: white;
+      color: black;
+      transform: scale(1.05);
     }
 
     .snowflake {
@@ -60,66 +64,41 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
-
-    .panic-button {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: red;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-
-    .panic-button:hover {
-      background: darkred;
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <button class="panic-button" onclick="panic()">Panic</button>
-
+  <!-- Main Welcome -->
   <h1>Welcome to bashW</h1>
   <p>Unblock the web with style.</p>
 
-  <div>
-    <button class="tab-button" onclick="showTab('home')">Home</button>
-    <button class="tab-button" onclick="showTab('games')">Games</button>
-    <button class="tab-button" onclick="showTab('credits')">Credits</button>
+  <!-- Games Section -->
+  <div class="section" id="games">
+    <h1>🎮 Games</h1>
+    <p>Games will go here. Coming soon!</p>
+    <!-- Example button or embed later -->
+    <a class="button" href="#">Game 1</a>
+    <a class="button" href="#">Game 2</a>
   </div>
 
-  <div id="home" class="tab-content active">
-    <p>This is the Home tab.</p>
+  <!-- Apps Section -->
+  <div class="section" id="apps">
+    <h1>📱 Apps</h1>
+    <p>Apps will go here. Coming soon!</p>
+    <a class="button" href="#">App 1</a>
+    <a class="button" href="#">App 2</a>
   </div>
 
-  <div id="games" class="tab-content">
-    <p>Games coming soon!</p>
+  <!-- Credits Section -->
+  <div class="section" id="credits">
+    <h1>💡 Credits</h1>
+    <p style="font-size: 2rem;">credits to us4 team and bash working on #bashW</p>
   </div>
 
-  <div id="credits" class="tab-content">
-    <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
-  </div>
-
+  <!-- Snowfall Script -->
   <script>
-    function showTab(tabId) {
-      const tabs = document.querySelectorAll('.tab-content');
-      tabs.forEach(tab => tab.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-    }
-
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
@@ -132,10 +111,7 @@
     }
 
     setInterval(createSnowflake, 100);
-
-    function panic() {
-      window.location.href = "https://classroom.google.com"; // or google.com or whatever you want
-    }
   </script>
 </body>
 </html>
+
