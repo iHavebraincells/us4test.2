@@ -85,16 +85,16 @@
       border-radius: 8px;
     }
 
-    .setting-group {
-      margin-top: 30px;
-    }
-
-    .game-iframe {
+    iframe {
       width: 90%;
       height: 600px;
       border: none;
       margin: 20px auto;
       display: block;
+    }
+
+    .setting-group {
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -118,11 +118,12 @@
   <section id="games">
     <h1>Games</h1>
     <div class="game-grid">
-      <div class="game-tile" onclick="openGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">
+      <div class="game-tile" onclick="loadGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">
         <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
         <p>Basket Hoop</p>
       </div>
     </div>
+    <div id="game-container"></div>
   </section>
 
   <section id="apps">
@@ -137,10 +138,10 @@
   <section id="updates">
     <h1>Update Log</h1>
     <ul style="text-align:left; max-width:600px; margin:auto;">
-      <li>✔ Basket Hoop game added</li>
-      <li>✔ Working snow background</li>
-      <li>✔ Background switcher in settings</li>
-      <li>✔ Tabs: Home, Games, Apps, Credits, Updates, Settings</li>
+      <li>✔ Basket Hoop embedded in-page</li>
+      <li>✔ Anti-close confirmation added</li>
+      <li>✔ Game images clickable</li>
+      <li>✔ Background toggle in Settings</li>
     </ul>
   </section>
 
@@ -150,6 +151,10 @@
       <p>Background Style:</p>
       <label><input type="radio" name="bg" value="snow" checked> Snow (Default)</label><br>
       <label><input type="radio" name="bg" value="custom"> ReaperPlays Avatar</label>
+    </div>
+    <div class="setting-group">
+      <p>Prevent Tab Close:</p>
+      <label><input type="checkbox" id="preventClose"> Enable Warning</label>
     </div>
   </section>
 
@@ -168,21 +173,11 @@
     let snowInterval = setInterval(createSnowflake, 100);
   </script>
 
-  <!-- SECTION SCRIPT -->
-  <script>
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
-
-    function panic() {
-      window.location.href = "https://classroom.google.com";
-    }
-  </script>
-
-  <!-- SETTINGS SCRIPT -->
+  <!-- SECTION & SETTINGS SCRIPT -->
   <script>
     const body = document.body;
+    let confirmTabClose = false;
+
     document.querySelectorAll('input[name="bg"]').forEach(radio => {
       radio.addEventListener('change', () => {
         if (radio.value === 'custom') {
@@ -196,8 +191,29 @@
       });
     });
 
-    function openGame(url) {
-      window.open(url, "_blank");
+    document.getElementById('preventClose').addEventListener('change', function () {
+      confirmTabClose = this.checked;
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+      if (confirmTabClose) {
+        e.preventDefault();
+        e.returnValue = 'Are you sure you want to close this tab?';
+      }
+    });
+
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function panic() {
+      window.location.href = "https://classroom.google.com";
+    }
+
+    function loadGame(url) {
+      const container = document.getElementById("game-container");
+      container.innerHTML = `<iframe src="${url}"></iframe>`;
     }
   </script>
 
