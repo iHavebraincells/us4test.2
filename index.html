@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bashW</title>
   <link rel="icon" href="/static/logo.png" type="image/png" />
+  <script src="/static/uv/uv.bundle.js" defer></script>
+  <script src="/static/uv/uv.config.js" defer></script>
+  <script src="/register-sw.js" defer></script>
   <style>
     body {
       margin: 0;
@@ -26,125 +28,95 @@
       z-index: 1000;
     }
 
-    nav button {
-      background: #222;
+    nav a {
       color: white;
+      text-decoration: none;
+      font-size: 1.2em;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background: #222;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: #333;
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 900px;
+      height: 600px;
       border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      cursor: pointer;
-      border-radius: 10px;
-    }
-
-    nav button:hover {
-      background: #444;
-    }
-
-    .page {
-      display: none;
-      padding: 30px;
-    }
-
-    .active {
-      display: block;
-    }
-
-    h1 {
-      font-size: 3em;
-      margin-top: 30px;
-    }
-
-    p {
-      font-size: 1.5em;
+      margin: 20px 0;
     }
 
     .snowflake {
       position: fixed;
       top: -10px;
-      color: white;
       z-index: 9999;
+      color: white;
       user-select: none;
       pointer-events: none;
       animation: fall linear infinite;
     }
 
     @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
-
-    #volumeControl {
-      margin-top: 20px;
-    }
-
-    input[type="range"] {
-      width: 200px;
-    }
-
-    #clickToPlay {
-      margin-top: 20px;
-      font-size: 1.2em;
-      background: #222;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-
   <nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('games')">Games</button>
-    <button onclick="showPage('apps')">Apps</button>
-    <button onclick="showPage('settings')">Settings</button>
-    <button onclick="showPage('credits')">Credits</button>
-    <button onclick="panic()">Panic</button>
+    <a href="#home">Home</a>
+    <a href="#games">Games</a>
+    <a href="#apps">Apps</a>
+    <a href="#credits">Credits</a>
+    <a href="#panic" onclick="panic()">Panic</a>
   </nav>
 
-  <div id="home" class="page active">
-    <h1>Welcome to bashW</h1>
+  <section id="home">
+    <h1 style="font-size: 3em;">Welcome to bashW</h1>
     <p>Unblock the web with style.</p>
-  </div>
+  </section>
 
-  <div id="games" class="page">
+  <section id="games">
     <h1>Games</h1>
-    <p>Coming soon!</p>
-  </div>
 
-  <div id="apps" class="page">
+    <h2>Tic Tac Toe</h2>
+    <iframe src="https://playtictactoe.org/"></iframe>
+
+    <h2>2048</h2>
+    <iframe src="https://play2048.co/"></iframe>
+
+    <h2>Harry the Stickman</h2>
+    <iframe src="https://ubg100.github.io/HenryStickminBreakingTheBank/" allowfullscreen></iframe>
+  </section>
+
+  <section id="apps">
     <h1>Apps</h1>
-    <p>Coming soon!</p>
-  </div>
+    <p>Add your app iframes here later.</p>
+  </section>
 
-  <div id="settings" class="page">
-    <h1>Settings</h1>
-    <button id="clickToPlay">▶ Click to Start Music</button>
-    <div id="volumeControl" style="display:none;">
-      <label for="volume">🔊 Volume:</label>
-      <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
-    </div>
-  </div>
-
-  <div id="credits" class="page">
+  <section id="credits">
     <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
-  </div>
+  </section>
 
   <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
-    }
-
     function panic() {
-      window.location.href = "https://classroom.google.com"; // or another safe site
+      window.location.replace("https://classroom.google.com");
     }
 
-    // Snowfall
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
@@ -155,27 +127,7 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
-
     setInterval(createSnowflake, 100);
-
-    // Music player
-    const audio = new Audio("https://files.catbox.moe/9midhh.mp3");
-    audio.loop = true;
-    audio.volume = 0.5;
-
-    document.getElementById("clickToPlay").addEventListener("click", () => {
-      audio.play().then(() => {
-        document.getElementById("clickToPlay").style.display = "none";
-        document.getElementById("volumeControl").style.display = "block";
-      }).catch(err => {
-        alert("Playback error: " + err);
-      });
-    });
-
-    document.getElementById("volume").addEventListener("input", function () {
-      audio.volume = this.value;
-    });
   </script>
 </body>
 </html>
-
