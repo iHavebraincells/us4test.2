@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -93,12 +93,17 @@
         opacity: 0;
       }
     }
+
+    .music-control {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
-  <!-- Music (auto plays) -->
-  <audio autoplay loop hidden>
-    <source src="https://files.catbox.moe/uvtw7v.mp3" type="audio/mpeg">
+  <!-- Hidden background music autoplay -->
+  <audio id="bg-music" autoplay loop>
+    <source src="https://files.catbox.moe/dq44eo.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
   </audio>
 
   <nav>
@@ -106,6 +111,7 @@
     <button onclick="showSection('games')">Games</button>
     <button onclick="showSection('apps')">Apps</button>
     <button onclick="showSection('credits')">Credits</button>
+    <button onclick="showSection('settings')">Settings</button>
     <button onclick="panic()">Panic</button>
   </nav>
 
@@ -126,6 +132,17 @@
 
   <section id="credits">
     <h1>credits to us4 team and bash working on #bashW</h1>
+  </section>
+
+  <section id="settings">
+    <h1>Settings</h1>
+    <div class="music-control">
+      <p><strong>Background Music:</strong></p>
+      <audio controls>
+        <source src="https://files.catbox.moe/dq44eo.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
   </section>
 
   <script>
