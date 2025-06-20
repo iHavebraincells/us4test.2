@@ -25,6 +25,9 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav button {
@@ -44,11 +47,20 @@
 
     .page {
       display: none;
-      padding: 40px;
+      padding: 60px 20px;
     }
 
     .page.active {
       display: block;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5em;
     }
 
     .snowflake {
@@ -62,24 +74,8 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
-
-    #credits h1 {
-      font-size: 3em;
-      margin-top: 100px;
-    }
-
-    #home h1 {
-      margin-top: 80px;
-      font-size: 2.5em;
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
@@ -121,4 +117,3 @@
   </script>
 </body>
 </html>
-
