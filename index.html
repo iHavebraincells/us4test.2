@@ -2,92 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bashW</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/voucan/voucan.github.io/main/googleclassroom.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- UV scripts -->
+  <title>bashW</title>
+  <link rel="icon" href="/static/logo.png" type="image/png" />
   <script src="/static/uv/uv.bundle.js" defer></script>
   <script src="/static/uv/uv.config.js" defer></script>
   <script src="/register-sw.js" defer></script>
-
   <style>
     body {
       margin: 0;
+      padding: 0;
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
       overflow: hidden;
-    }
-    h1 {
-      padding-top: 20vh;
-      font-size: 3em;
-    }
-    input {
-      width: 300px;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      background: white;
-      color: black;
-      margin-left: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #ddd;
+      text-align: center;
     }
 
-    /* snow effect */
+    h1 {
+      font-size: 3rem;
+      margin-top: 100px;
+    }
+
     .snowflake {
       position: fixed;
       top: -10px;
       z-index: 9999;
-      user-select: none;
       color: white;
-      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
       animation: fall linear infinite;
     }
+
     @keyframes fall {
       0% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0);
+        opacity: 1;
       }
       100% {
-        transform: translateY(100vh) rotate(360deg);
+        transform: translateY(100vh);
+        opacity: 0;
       }
     }
   </style>
 </head>
 <body>
-  <h1>bashW Proxy</h1>
-  <input id="url" placeholder="Enter site URL (e.g. https://example.com)" />
-  <button onclick="go()">Go</button>
+  <h1>Welcome to bashW</h1>
+  <p>Unblock the web with style.</p>
 
   <script>
-    function go() {
-      const input = document.getElementById('url').value.trim();
-      if (!input) return;
-      const encoded = __uv$config.encodeUrl(input.startsWith('http') ? input : 'https://' + input);
-      window.location.href = '/embed.html?p=' + encoded;
-    }
-
-    // snow generation
-    setInterval(() => {
+    function createSnowflake() {
       const snowflake = document.createElement("div");
-      snowflake.className = "snowflake";
+      snowflake.classList.add("snowflake");
       snowflake.textContent = "❄";
       snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.animationDuration = 5 + Math.random() * 5 + "s";
-      snowflake.style.fontSize = (10 + Math.random() * 20) + "px";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 10000);
-    }, 200);
+      setTimeout(() => snowflake.remove(), 5000);
+    }
+
+    setInterval(createSnowflake, 100);
   </script>
 </body>
 </html>
