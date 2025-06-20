@@ -1,226 +1,128 @@
-<!-- [START of HTML] -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
   <link rel="icon" href="/static/logo.png" type="image/png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: black;
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      overflow-x: hidden;
+      background: black;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-
     nav {
-      background: #111;
-      padding: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      position: sticky;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      position: fixed;
+      width: 100%;
       top: 0;
       z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
-
-    .nav-btn {
+    nav a {
       color: white;
-      background: #222;
-      padding: 10px 20px;
       text-decoration: none;
-      border-radius: 10px;
       font-weight: bold;
-      transition: background 0.3s;
     }
-
-    .nav-btn:hover {
-      background: #333;
-    }
-
-    .page-section {
+    section {
       display: none;
-      padding: 40px 20px;
+      padding-top: 80px;
     }
-
-    .active {
+    section.active {
       display: block;
     }
-
-    h1 {
-      font-size: 3em;
-      margin-top: 40px;
-    }
-
     .snowflake {
       position: fixed;
       top: -10px;
-      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
       animation: fall linear infinite;
+      z-index: 0;
     }
-
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
-
-    textarea {
-      width: 80%;
-      background: #111;
-      color: #0f0;
-      border: 2px solid #555;
-      padding: 10px;
-      font-family: monospace;
-    }
-
-    button {
-      padding: 8px 15px;
-      margin: 4px;
-      border: none;
-      background: #333;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #555;
-    }
-
-    input[type="text"] {
-      padding: 10px;
-      width: 200px;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      text-align: left;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
     .game-grid {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 20px;
-      margin-top: 30px;
+      margin-top: 40px;
     }
-
-    .game-card {
-      width: 200px;
-      height: 200px;
-      background: #1a1a1a;
-      border: 2px solid #333;
-      border-radius: 10px;
-      cursor: pointer;
-      padding: 10px;
-    }
-
-    iframe {
-      width: 90%;
-      height: 500px;
+    .game-grid iframe {
       border: none;
-      margin-top: 20px;
+      width: 300px;
+      height: 400px;
+    }
+    .setting-group {
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
+
   <nav>
-    <a href="#home" class="nav-btn">Home</a>
-    <a href="#games" class="nav-btn">Games</a>
-    <a href="#apps" class="nav-btn">Apps</a>
-    <a href="#credits" class="nav-btn">Credits</a>
-    <a href="#updatelog" class="nav-btn">Update Log</a>
-    <a href="#panic" class="nav-btn">Panic</a>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('games')">Games</a>
+    <a href="#" onclick="showSection('apps')">Apps</a>
+    <a href="#" onclick="showSection('credits')">Credits</a>
+    <a href="#" onclick="showSection('updates')">Update Log</a>
+    <a href="#" onclick="showSection('settings')">Settings</a>
+    <a href="#" onclick="panic()">Panic</a>
   </nav>
 
-  <!-- HOME -->
-  <div id="home" class="page-section active">
+  <section id="home" class="active">
     <h1>Welcome to bashW</h1>
-    <p style="font-size: 1.2em;">Unblock the web with style.</p>
-  </div>
+    <p>Unblock the web with style.</p>
+  </section>
 
-  <!-- GAMES -->
-  <div id="games" class="page-section">
+  <section id="games">
     <h1>Games</h1>
     <div class="game-grid">
-      <div class="game-card" onclick="loadGame('https://tictoe.io')">Tic Tac Toe</div>
-      <div class="game-card" onclick="loadGame('https://play2048.co')">2048</div>
+      <iframe src="https://tic-tac-toe-free.com/"></iframe>
+      <iframe src="https://play2048.co/"></iframe>
     </div>
-    <iframe id="game-frame" style="display:none;"></iframe>
- <h1>more games coming soon</h1>
-  </div>
-  <!-- APPS -->
-  <div id="apps" class="page-section">
+  </section>
+
+  <section id="apps">
     <h1>Apps</h1>
+    <p>Coming soon!</p>
+  </section>
 
-    <!-- Calculator -->
-    <h2>Calculator</h2>
-    <input type="text" id="calc-display" readonly /><br><br>
-    <div>
-      <button onclick="appendCalc('1')">1</button>
-      <button onclick="appendCalc('2')">2</button>
-      <button onclick="appendCalc('3')">3</button>
-      <button onclick="appendCalc('+')">+</button><br>
-      <button onclick="appendCalc('4')">4</button>
-      <button onclick="appendCalc('5')">5</button>
-      <button onclick="appendCalc('6')">6</button>
-      <button onclick="appendCalc('-')">-</button><br>
-      <button onclick="appendCalc('7')">7</button>
-      <button onclick="appendCalc('8')">8</button>
-      <button onclick="appendCalc('9')">9</button>
-      <button onclick="appendCalc('*')">*</button><br>
-      <button onclick="appendCalc('0')">0</button>
-      <button onclick="clearCalc()">C</button>
-      <button onclick="calculate()">=</button>
-      <button onclick="appendCalc('/')">/</button>
-    </div>
+  <section id="credits">
+    <h1 style="font-size: 2.5em;">credits to us4 team and bash working on #bashW</h1>
+  </section>
 
-    <hr style="margin: 40px 0;">
-
-    <!-- JS Executor -->
-    <h2>JavaScript Executor</h2>
-    <textarea id="js-input" rows="6" placeholder="Type your JavaScript code here..."></textarea><br>
-    <button onclick="runJS()">Run Script</button>
-    <pre id="js-output"></pre>
-  </div>
-
-  <!-- CREDITS -->
-  <div id="credits" class="page-section">
-    <h1>credits to us4 team and bash working on #bashW</h1>
-  </div>
-
-  <!-- UPDATE LOG -->
-  <div id="updatelog" class="page-section">
+  <section id="updates">
     <h1>Update Log</h1>
-    <pre>
-- v1.0 - Created bashW homepage
-- v1.1 - Added snowfall effect and Credits tab
-- v1.2 - Built Games and Apps sections
-- v1.3 - Added Calculator and JavaScript Executor
-- v1.4 - Added Update Log tab
-- v1.5 - Games now embed and display properly
-    </pre>
-  </div>
+    <ul style="text-align:left; max-width:600px; margin:auto;">
+      <li>✔ Added working snowfall</li>
+      <li>✔ Games: Tic Tac Toe & 2048 embedded</li>
+      <li>✔ Added Credits, Panic, and Settings tab</li>
+      <li>✔ Settings allows background switch to ReaperPlays avatar</li>
+    </ul>
+  </section>
 
-  <!-- PANIC -->
-  <div id="panic" class="page-section">
-    <h1>Panic Mode</h1>
-    <p>Use this tab to redirect quickly. (Coming soon...)</p>
-  </div>
+  <section id="settings">
+    <h1>Settings</h1>
+    <div class="setting-group">
+      <p>Background Style:</p>
+      <label><input type="radio" name="bg" value="snow" checked> Snow (Default)</label><br>
+      <label><input type="radio" name="bg" value="custom"> ReaperPlays3515 Avatar</label>
+    </div>
+  </section>
 
-  <!-- SNOW -->
+  <!-- SNOW SCRIPT -->
   <script>
     function createSnowflake() {
       const snowflake = document.createElement("div");
@@ -232,61 +134,36 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
-    setInterval(createSnowflake, 100);
+    let snowInterval = setInterval(createSnowflake, 100);
   </script>
 
-  <!-- JS Logic -->
+  <!-- NAV SCRIPT -->
   <script>
-    const sections = document.querySelectorAll('.page-section');
-    const navLinks = document.querySelectorAll('.nav-btn');
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+    function panic() {
+      window.location.href = "https://classroom.google.com"; // panic redirect
+    }
+  </script>
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById(targetId).classList.add('active');
-
-        // Hide game iframe when switching tabs
-        if (targetId !== "games") {
-          document.getElementById("game-frame").style.display = "none";
+  <!-- SETTINGS SCRIPT -->
+  <script>
+    const body = document.body;
+    document.querySelectorAll('input[name="bg"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === 'custom') {
+          clearInterval(snowInterval);
+          document.querySelectorAll('.snowflake').forEach(e => e.remove());
+          body.style.backgroundImage = "url('https://yt3.googleusercontent.com/XsGPReVtEzgz2d7kSa7MvJBxPhyvrkSsMrjFtU_Nm0YyERXoLIJ0sRUVQDBz201Gs30lRhxerA=s160-c-k-c0x00ffffff-no-rj')";
+        } else {
+          body.style.backgroundImage = "none";
+          snowInterval = setInterval(createSnowflake, 100);
         }
       });
     });
-
-    function appendCalc(val) {
-      document.getElementById('calc-display').value += val;
-    }
-
-    function clearCalc() {
-      document.getElementById('calc-display').value = '';
-    }
-
-    function calculate() {
-      try {
-        const result = eval(document.getElementById('calc-display').value);
-        document.getElementById('calc-display').value = result;
-      } catch {
-        document.getElementById('calc-display').value = 'Error';
-      }
-    }
-
-    function runJS() {
-      const code = document.getElementById('js-input').value;
-      try {
-        const result = eval(code);
-        document.getElementById('js-output').textContent = result ?? 'Executed.';
-      } catch (e) {
-        document.getElementById('js-output').textContent = 'Error: ' + e;
-      }
-    }
-
-    function loadGame(url) {
-      const iframe = document.getElementById("game-frame");
-      iframe.src = url;
-      iframe.style.display = "block";
-    }
   </script>
+
 </body>
 </html>
-<!-- [END of HTML] -->
