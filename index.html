@@ -1,13 +1,10 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
   <link rel="icon" href="/static/logo.png" type="image/png" />
-  <script src="/static/uv/uv.bundle.js" defer></script>
-  <script src="/static/uv/uv.config.js" defer></script>
-  <script src="/register-sw.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -16,34 +13,46 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
+      overflow-x: hidden;
     }
 
     nav {
-      display: flex;
-      justify-content: center;
       background: #111;
       padding: 15px;
-      gap: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    nav a {
+    .nav-btn {
       color: white;
+      background: #222;
+      padding: 10px 20px;
       text-decoration: none;
-      font-size: 18px;
-      transition: 0.3s;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background 0.3s;
     }
 
-    nav a:hover {
-      color: #00ffff;
+    .nav-btn:hover {
+      background: #333;
     }
 
-    section {
+    .page-section {
       display: none;
-      padding: 20px;
+      padding: 40px 20px;
     }
 
-    section.active {
+    .active {
       display: block;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-top: 40px;
     }
 
     .snowflake {
@@ -60,61 +69,112 @@
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
+
+    textarea {
+      width: 80%;
+      background: #111;
+      color: #0f0;
+      border: 2px solid #555;
+      padding: 10px;
+      font-family: monospace;
+    }
+
+    button {
+      padding: 8px 15px;
+      margin: 4px;
+      border: none;
+      background: #333;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 200px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
   </style>
 </head>
 <body>
   <nav>
-    <a href="#home" onclick="showSection('home')">Home</a>
-    <a href="#games" onclick="showSection('games')">Games</a>
-    <a href="#apps" onclick="showSection('apps')">Apps</a>
-    <a href="#credits" onclick="showSection('credits')">Credits</a>
-    <a href="#updates" onclick="showSection('updates')">Update Log</a>
-    <a href="#panic" onclick="panic()">Panic</a>
+    <a href="#home" class="nav-btn">Home</a>
+    <a href="#games" class="nav-btn">Games</a>
+    <a href="#apps" class="nav-btn">Apps</a>
+    <a href="#credits" class="nav-btn">Credits</a>
+    <a href="#panic" class="nav-btn">Panic</a>
   </nav>
 
-  <section id="home" class="active">
-    <h1 style="font-size: 3em; margin-top: 40px;">Welcome to bashW</h1>
+  <!-- HOME -->
+  <div id="home" class="page-section active">
+    <h1>Welcome to bashW</h1>
     <p>Unblock the web with style.</p>
-  </section>
+  </div>
 
-  <section id="games">
+  <!-- GAMES -->
+  <div id="games" class="page-section">
     <h1>Games</h1>
-    <h2>Tic Tac Toe</h2>
-    <iframe src="https://playtictactoe.org/" width="100%" height="500px" style="border:none;"></iframe>
+    <p>Games coming soon!</p>
+  </div>
 
-    <h2>2048</h2>
-    <iframe src="https://media.abcya.com/games/2048/html/index.html" width="100%" height="500px" style="border:none;"></iframe>
-
-    <h2>Fleeing the Complex (Henry Stickmin)</h2>
-    <iframe src="https://onlinegames.io/fleeing-the-complex/" width="100%" height="600px" style="border:none;"></iframe>
-  </section>
-
-  <section id="apps">
+  <!-- APPS -->
+  <div id="apps" class="page-section">
     <h1>Apps</h1>
-    <p>Coming soon...</p>
-  </section>
 
-  <section id="credits">
-    <h1 style="font-size: 2.5em;">credits to us4 team and bash working on #bashW</h1>
-  </section>
+    <!-- Calculator -->
+    <h2>Calculator</h2>
+    <input type="text" id="calc-display" readonly /><br><br>
+    <div>
+      <button onclick="appendCalc('1')">1</button>
+      <button onclick="appendCalc('2')">2</button>
+      <button onclick="appendCalc('3')">3</button>
+      <button onclick="appendCalc('+')">+</button><br>
+      <button onclick="appendCalc('4')">4</button>
+      <button onclick="appendCalc('5')">5</button>
+      <button onclick="appendCalc('6')">6</button>
+      <button onclick="appendCalc('-')">-</button><br>
+      <button onclick="appendCalc('7')">7</button>
+      <button onclick="appendCalc('8')">8</button>
+      <button onclick="appendCalc('9')">9</button>
+      <button onclick="appendCalc('*')">*</button><br>
+      <button onclick="appendCalc('0')">0</button>
+      <button onclick="clearCalc()">C</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="appendCalc('/')">/</button>
+    </div>
 
-  <section id="updates">
-    <h1>Update Log</h1>
-    <ul id="commit-list" style="list-style: none; font-size: 18px; padding: 0;">
-      <li>Loading updates...</li>
-    </ul>
-  </section>
+    <hr style="margin: 40px 0;">
 
+    <!-- JS Executor -->
+    <h2>JavaScript Executor</h2>
+    <textarea id="js-input" rows="6" placeholder="Type your JavaScript code here..."></textarea><br>
+    <button onclick="runJS()">Run Script</button>
+    <pre id="js-output"></pre>
+  </div>
+
+  <!-- CREDITS -->
+  <div id="credits" class="page-section">
+    <h1>credits to us4 team and bash working on #bashW</h1>
+  </div>
+
+  <!-- PANIC -->
+  <div id="panic" class="page-section">
+    <h1>Panic Mode</h1>
+    <p>Use this tab to redirect quickly. (Coming soon...)</p>
+  </div>
+
+  <!-- Snow Script -->
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    function panic() {
-      window.location.href = 'https://classroom.google.com';
-    }
-
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
@@ -125,31 +185,49 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
-
     setInterval(createSnowflake, 100);
+  </script>
 
-    async function fetchCommits() {
-      const repo = 'iHavebraincells/us4test.2';
-      const commitList = document.getElementById('commit-list');
+  <!-- Navigation Logic -->
+  <script>
+    const sections = document.querySelectorAll('.page-section');
+    const navLinks = document.querySelectorAll('.nav-btn');
 
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+
+    function appendCalc(val) {
+      document.getElementById('calc-display').value += val;
+    }
+
+    function clearCalc() {
+      document.getElementById('calc-display').value = '';
+    }
+
+    function calculate() {
       try {
-        const res = await fetch(`https://api.github.com/repos/${repo}/commits`);
-        const data = await res.json();
-
-        commitList.innerHTML = '';
-
-        data.slice(0, 5).forEach(commit => {
-          const item = document.createElement('li');
-          item.textContent = `🔹 ${commit.commit.message}`;
-          commitList.appendChild(item);
-        });
-      } catch (err) {
-        commitList.innerHTML = '<li>⚠️ Failed to load commits</li>';
-        console.error(err);
+        const result = eval(document.getElementById('calc-display').value);
+        document.getElementById('calc-display').value = result;
+      } catch {
+        document.getElementById('calc-display').value = 'Error';
       }
     }
 
-    fetchCommits();
+    function runJS() {
+      const code = document.getElementById('js-input').value;
+      try {
+        const result = eval(code);
+        document.getElementById('js-output').textContent = result ?? 'Executed.';
+      } catch (e) {
+        document.getElementById('js-output').textContent = 'Error: ' + e;
+      }
+    }
   </script>
 </body>
 </html>
