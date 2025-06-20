@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
+      padding: 0;
       background: black;
       color: white;
       font-family: Arial, sans-serif;
@@ -16,10 +17,6 @@
     nav {
       background: #111;
       padding: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
     }
 
     nav button {
@@ -27,8 +24,8 @@
       color: white;
       border: none;
       padding: 10px 15px;
+      margin: 0 5px;
       cursor: pointer;
-      font-size: 16px;
     }
 
     .tab-content {
@@ -36,13 +33,8 @@
       padding: 20px;
     }
 
-    .active {
+    .tab-content.active {
       display: block;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
     }
 
     .snowflake {
@@ -55,29 +47,32 @@
       animation: fall linear infinite;
     }
 
-    .grid {
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .game-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
 
-    .card {
+    .game-card {
       background: #111;
       border: 1px solid #333;
       border-radius: 10px;
-      width: 200px;
+      width: 250px;
       padding: 10px;
     }
 
-    .card img {
+    .game-card img {
       width: 100%;
-      height: 100px;
-      object-fit: contain;
       border-radius: 5px;
     }
 
-    .card button {
+    .game-card button {
       margin-top: 10px;
       padding: 5px 10px;
       background: #444;
@@ -91,12 +86,20 @@
       width: 100%;
       height: 600px;
       border: none;
-      margin-top: 20px;
+    }
+
+    input.proxy-input {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #333;
+      background: #222;
+      color: white;
     }
   </style>
 </head>
 <body>
-
   <nav>
     <button onclick="showTab('home')">Home</button>
     <button onclick="showTab('games')">Games</button>
@@ -114,19 +117,51 @@
 
   <div id="games" class="tab-content">
     <h1>Games</h1>
-    <div class="grid" id="gameGrid"></div>
-    <div id="gameFrameContainer"></div>
+    <div class="game-grid">
+      <div class="game-card">
+        <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
+        <h3>Basket Hoop</h3>
+        <button onclick="window.open('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html', '_self')">Play</button>
+      </div>
+      <!-- You can add more game cards here -->
+    </div>
   </div>
 
   <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <div class="grid" id="appGrid"></div>
-    <div id="appFrameContainer"></div>
+    <div class="game-grid">
+      <div class="game-card">
+        <img src="https://upload.wikimedia.org/wikipedia/en/9/91/Google.png" alt="Google">
+        <h3>Google</h3>
+        <button onclick="window.open('https://www.google.com', '_self')">Launch</button>
+      </div>
+      <div class="game-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
+        <h3>Discord</h3>
+        <button onclick="window.open('https://discord.com/app', '_self')">Launch</button>
+      </div>
+      <div class="game-card">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+        <h3>GitHub</h3>
+        <button onclick="window.open('https://github.com', '_self')">Launch</button>
+      </div>
+      <div class="game-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube">
+        <h3>YouTube</h3>
+        <button onclick="window.open('https://www.youtube.com', '_self')">Launch</button>
+      </div>
+      <div class="game-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
+        <h3>Spotify</h3>
+        <button onclick="window.open('https://open.spotify.com', '_self')">Launch</button>
+      </div>
+    </div>
   </div>
 
   <div id="proxy" class="tab-content">
-    <h1>Proxy</h1>
-    <iframe src="https://www.google.com/search?igu=1"></iframe>
+    <h1>Proxy Browser</h1>
+    <input class="proxy-input" id="proxy-url" placeholder="Enter URL and hit Enter (https://...)" onkeypress="loadProxy(event)" />
+    <iframe id="proxy-frame" src=""></iframe>
   </div>
 
   <div id="credits" class="tab-content">
@@ -136,29 +171,31 @@
 
   <div id="settings" class="tab-content">
     <h1>Settings</h1>
-    <p>More background options coming soon.</p>
+    <p>More backgrounds and options coming soon.</p>
   </div>
 
   <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>✅ Snowfall background</li>
-      <li>✅ Tabs: Home, Games, Apps, Proxy, Credits, Settings, Log</li>
-      <li>✅ App + Game Grids</li>
-      <li>✅ Apps open in-page (iframe)</li>
+      <li>🎮 Added built-in games like Basket Hoop</li>
+      <li>🧩 Apps now shown in card layout</li>
+      <li>🌐 Proxy browser with address input</li>
+      <li>❄️ Snowfall background enabled</li>
+      <li>🔧 Settings and update log ready</li>
     </ul>
   </div>
 
   <script>
-    const tabs = document.querySelectorAll('.tab-content');
     function showTab(id) {
-      tabs.forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
       document.getElementById(id).classList.add('active');
     }
 
     function createSnowflake() {
       const snowflake = document.createElement("div");
-      snowflake.className = "snowflake";
+      snowflake.classList.add("snowflake");
       snowflake.textContent = "❄";
       snowflake.style.left = Math.random() * window.innerWidth + "px";
       snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
@@ -166,81 +203,14 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
+
     setInterval(createSnowflake, 100);
 
-    const games = [
-      {
-        title: "Basket Hoop",
-        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
-      },
-      {
-        title: "Capybara Clicker Pro",
-        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
-        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
+    function loadProxy(e) {
+      if (e.key === "Enter") {
+        const url = document.getElementById("proxy-url").value;
+        document.getElementById("proxy-frame").src = url;
       }
-    ];
-
-    const apps = [
-      {
-        title: "Google",
-        embed: "https://www.google.com",
-        image: "https://ssl.gstatic.com/images/branding/product/1x/googleg_64dp.png"
-      },
-      {
-        title: "Discord",
-        embed: "https://discord.com",
-        image: "https://cdn.worldvectorlogo.com/logos/discord-6.svg"
-      },
-      {
-        title: "GitHub",
-        embed: "https://github.com",
-        image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      },
-      {
-        title: "YouTube",
-        embed: "https://youtube.com",
-        image: "https://www.youtube.com/s/desktop/53767f63/img/favicon_144x144.png"
-      },
-      {
-        title: "Spotify",
-        embed: "https://open.spotify.com",
-        image: "https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Icon_RGB_White.png"
-      }
-    ];
-
-    const gameGrid = document.getElementById("gameGrid");
-    const gameFrameContainer = document.getElementById("gameFrameContainer");
-    games.forEach(game => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="${game.image}" alt="${game.title}" />
-        <h3>${game.title}</h3>
-        <button onclick="loadGame('${game.embed}')">Play</button>
-      `;
-      gameGrid.appendChild(card);
-    });
-
-    function loadGame(url) {
-      gameFrameContainer.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-    }
-
-    const appGrid = document.getElementById("appGrid");
-    const appFrameContainer = document.getElementById("appFrameContainer");
-    apps.forEach(app => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="${app.image}" alt="${app.title}" />
-        <h3>${app.title}</h3>
-        <button onclick="loadApp('${app.embed}')">Open</button>
-      `;
-      appGrid.appendChild(card);
-    });
-
-    function loadApp(url) {
-      appFrameContainer.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
     }
   </script>
 </body>
