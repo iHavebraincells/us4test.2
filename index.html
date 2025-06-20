@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>bashW</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -15,17 +14,21 @@
     }
 
     nav {
-      background: #111;
+      background: #222;
       padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     nav button {
-      background: #222;
-      color: white;
+      background: #333;
       border: none;
+      color: white;
       padding: 10px 15px;
       margin: 0 5px;
       cursor: pointer;
+      font-size: 1em;
     }
 
     .tab-content {
@@ -40,10 +43,10 @@
     .snowflake {
       position: fixed;
       top: -10px;
-      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
+      font-size: 24px;
       animation: fall linear infinite;
     }
 
@@ -52,50 +55,32 @@
       100% { transform: translateY(100vh); opacity: 0; }
     }
 
-    .game-grid {
+    .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
 
-    .game-card {
+    .card {
       background: #111;
       border: 1px solid #333;
       border-radius: 10px;
-      width: 250px;
+      width: 200px;
       padding: 10px;
+      cursor: pointer;
     }
 
-    .game-card img {
+    .card img {
       width: 100%;
       border-radius: 5px;
-    }
-
-    .game-card button {
-      margin-top: 10px;
-      padding: 5px 10px;
-      background: #444;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
     }
 
     iframe {
       width: 100%;
       height: 600px;
       border: none;
-    }
-
-    input.proxy-input {
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #333;
-      background: #222;
-      color: white;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -117,71 +102,57 @@
 
   <div id="games" class="tab-content">
     <h1>Games</h1>
-    <div class="game-grid">
-      <div class="game-card">
-        <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
-        <h3>Basket Hoop</h3>
-        <button onclick="window.open('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html', '_self')">Play</button>
-      </div>
-      <!-- You can add more game cards here -->
-    </div>
+    <!-- You can paste your game grid here -->
+    <p>Games go here.</p>
   </div>
 
   <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <div class="game-grid">
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/en/9/91/Google.png" alt="Google">
-        <h3>Google</h3>
-        <button onclick="window.open('https://www.google.com', '_self')">Launch</button>
+    <div class="grid">
+      <div class="card" onclick="loadApp('https://www.google.com/search?igu=1')">
+        <img src="https://www.google.com/favicon.ico" alt="Google">
+        <p>Google</p>
       </div>
-      <div class="game-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
-        <h3>Discord</h3>
-        <button onclick="window.open('https://discord.com/app', '_self')">Launch</button>
+      <div class="card" onclick="loadApp('https://open.spotify.com')">
+        <img src="https://open.spotifycdn.com/cdn/images/favicon32.b64ecc03.png" alt="Spotify">
+        <p>Spotify</p>
       </div>
-      <div class="game-card">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
-        <h3>GitHub</h3>
-        <button onclick="window.open('https://github.com', '_self')">Launch</button>
+      <div class="card" onclick="loadApp('https://www.youtube.com')">
+        <img src="https://www.youtube.com/s/desktop/f1f6c486/img/favicon_32x32.png" alt="YouTube">
+        <p>YouTube</p>
       </div>
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube">
-        <h3>YouTube</h3>
-        <button onclick="window.open('https://www.youtube.com', '_self')">Launch</button>
+      <div class="card" onclick="loadApp('https://github.com')">
+        <img src="https://github.githubassets.com/favicons/favicon.png" alt="GitHub">
+        <p>GitHub</p>
       </div>
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
-        <h3>Spotify</h3>
-        <button onclick="window.open('https://open.spotify.com', '_self')">Launch</button>
+      <div class="card" onclick="loadApp('https://discord.com')">
+        <img src="https://discord.com/favicon.ico" alt="Discord">
+        <p>Discord</p>
       </div>
     </div>
+    <iframe id="appFrame" src=""></iframe>
   </div>
 
   <div id="proxy" class="tab-content">
-    <h1>Proxy Browser</h1>
-    <input class="proxy-input" id="proxy-url" placeholder="Enter URL and hit Enter (https://...)" onkeypress="loadProxy(event)" />
-    <iframe id="proxy-frame" src=""></iframe>
+    <h1>Proxy</h1>
+    <p>Proxy integration coming soon!</p>
   </div>
 
   <div id="credits" class="tab-content">
-    <h1 style="font-size: 2.5em;">Credits</h1>
-    <p>Credits to the US4 team and bash working on #bashW</p>
+    <h1>Credits</h1>
+    <p>Credits to US4 team and bash working on #bashW</p>
   </div>
 
   <div id="settings" class="tab-content">
     <h1>Settings</h1>
-    <p>More backgrounds and options coming soon.</p>
+    <p>Background options and more coming soon.</p>
   </div>
 
   <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>🎮 Added built-in games like Basket Hoop</li>
-      <li>🧩 Apps now shown in card layout</li>
-      <li>🌐 Proxy browser with address input</li>
-      <li>❄️ Snowfall background enabled</li>
-      <li>🔧 Settings and update log ready</li>
+      <li>Added app grid system with internal iframe loading</li>
+      <li>Fixed navigation blocking new tab behavior</li>
     </ul>
   </div>
 
@@ -193,25 +164,20 @@
       document.getElementById(id).classList.add('active');
     }
 
-    function createSnowflake() {
+    function loadApp(url) {
+      document.getElementById('appFrame').src = url;
+    }
+
+    // Snow effect
+    setInterval(() => {
       const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.textContent = "❄";
+      snowflake.className = "snowflake";
+      snowflake.innerText = "❄";
       snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
       snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
-    }
-
-    setInterval(createSnowflake, 100);
-
-    function loadProxy(e) {
-      if (e.key === "Enter") {
-        const url = document.getElementById("proxy-url").value;
-        document.getElementById("proxy-frame").src = url;
-      }
-    }
+    }, 100);
   </script>
 </body>
 </html>
