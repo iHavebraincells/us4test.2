@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
-  <link rel="icon" href="/static/logo.png" type="image/png" />
   <style>
     body {
       margin: 0;
@@ -15,28 +14,21 @@
     }
 
     nav {
-      background-color: #222;
+      background: #111;
       padding: 10px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      gap: 10px;
     }
 
     nav button {
-      background: #444;
-      border: none;
+      background: #222;
       color: white;
+      border: none;
       padding: 10px 15px;
-      margin: 5px;
       cursor: pointer;
-      border-radius: 5px;
-    }
-
-    nav button:hover {
-      background: #666;
+      font-size: 16px;
     }
 
     .tab-content {
@@ -48,20 +40,19 @@
       display: block;
     }
 
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      color: white;
-      user-select: none;
-      pointer-events: none;
-      font-size: 1em;
-      animation: fall linear infinite;
-      z-index: 9999;
-    }
-
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      z-index: 9999;
+      color: white;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
     }
 
     .game-grid {
@@ -75,7 +66,7 @@
       background: #111;
       border: 1px solid #333;
       border-radius: 10px;
-      width: 250px;
+      width: 200px;
       padding: 10px;
     }
 
@@ -102,6 +93,7 @@
   </style>
 </head>
 <body>
+
   <nav>
     <button onclick="showTab('home')">Home</button>
     <button onclick="showTab('games')">Games</button>
@@ -125,14 +117,20 @@
 
   <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <iframe src="https://www.google.com" title="Google"></iframe>
-    <iframe src="https://discord.com" title="Discord"></iframe>
-    <iframe src="https://github.com" title="GitHub"></iframe>
+    <h3>Google Search</h3>
+    <iframe src="https://www.google.com/search?igu=1"></iframe>
+
+    <h3>Discord Chat</h3>
+    <iframe src="https://e.widgetbot.io/channels/your-server-id/your-channel-id" width="100%" height="500"></iframe>
+
+    <h3>GitHub</h3>
+    <p><a href="https://github.com" target="_blank">Open GitHub</a></p>
   </div>
 
   <div id="proxy" class="tab-content">
-    <h1>Google Proxy</h1>
-    <iframe src="https://www.google.com/search?q=proxy" title="Proxy Search"></iframe>
+    <h1>Proxy</h1>
+    <p>Google Proxy Example:</p>
+    <iframe src="https://www.google.com/search?igu=1"></iframe>
   </div>
 
   <div id="credits" class="tab-content">
@@ -142,94 +140,70 @@
 
   <div id="settings" class="tab-content">
     <h1>Settings</h1>
-    <p>More backgrounds and options coming soon.</p>
+    <p>More background options coming soon.</p>
   </div>
 
   <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>✅ Snowfall background added</li>
-      <li>✅ Tabs: Home, Games, Apps, Proxy, Credits, Settings</li>
-      <li>✅ Game embeds with cards</li>
-      <li>✅ Apps: Google, Discord, GitHub</li>
-      <li>✅ Proxy embed added</li>
-      <li>✅ You’re viewing: v1.0</li>
+      <li>✔ Tabs added: Home, Games, Apps, Proxy, Credits, Settings, Log</li>
+      <li>✔ Falling snow effect</li>
+      <li>✔ Game iframe + grid support</li>
+      <li>✔ Proxy embed + app previews</li>
     </ul>
   </div>
 
   <script>
+    const tabs = document.querySelectorAll('.tab-content');
+    function showTab(id) {
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     const games = [
       {
         title: "Basket Hoop",
         embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg",
+        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
       },
       {
-        title: "Apocalypse Truck",
-        embed: "https://cloud.onlinegames.io/games/2021/1/apocalypse-truck/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1015/responsive/apocalypse-truck-xs.jpg",
-      },
-      {
-        title: "Kick the Pirate",
-        embed: "https://cloud.onlinegames.io/games/2022/construct/92/kick-the-pirate/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1012/responsive/Kick-The-Pirate-xs.jpg",
-      },
-      {
-        title: "Julie Beauty Salon",
-        embed: "https://cloud.onlinegames.io/games/2021/1/julie-beauty-salon/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1011/responsive/Julie-Beauty-Salon-xs.jpg",
-      },
-      {
-        title: "Mini Cars Racing",
-        embed: "https://cloud.onlinegames.io/games/2021/unity/mini-cars-racing/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1010/responsive/Mini-Cars-Racing-xs.jpg",
-      },
-      {
-        title: "Pyramid Solitaire",
-        embed: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html#pyramid",
-        image: "https://www.onlinegames.io/media/posts/1006/responsive/pyramid-Solitaire-xs.jpg",
-      },
-      {
-        title: "Drift King",
-        embed: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html",
-        image: "https://www.onlinegames.io/media/posts/729/responsive/Drift-King-xs.jpg",
+        title: "Capybara Clicker Pro",
+        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
+        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
       }
+      // Add more games here...
     ];
 
-    function showTab(id) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
     const gameGrid = document.getElementById("gameGrid");
-    games.forEach((game, i) => {
+    const gameFrameContainer = document.getElementById("gameFrameContainer");
+
+    games.forEach(game => {
       const card = document.createElement("div");
       card.className = "game-card";
       card.innerHTML = `
-        <img src="${game.image}" alt="${game.title}">
+        <img src="${game.image}" alt="${game.title}" />
         <h3>${game.title}</h3>
         <button onclick="loadGame('${game.embed}')">Play</button>
       `;
       gameGrid.appendChild(card);
     });
 
-    function loadGame(url) {
-      document.getElementById("gameFrameContainer").innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-      showTab("games");
+    function loadGame(embedUrl) {
+      gameFrameContainer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
     }
 
     function createSnowflake() {
-      const flake = document.createElement("div");
-      flake.className = "snowflake";
-      flake.textContent = "❄";
-      flake.style.left = Math.random() * window.innerWidth + "px";
-      flake.style.fontSize = Math.random() * 10 + 10 + "px";
-      flake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      document.body.appendChild(flake);
-      setTimeout(() => flake.remove(), 5000);
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.textContent = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
     }
-
     setInterval(createSnowflake, 100);
   </script>
 </body>
 </html>
+
