@@ -16,6 +16,7 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
+
     nav {
       background: rgba(0, 0, 0, 0.5);
       padding: 10px;
@@ -27,18 +28,22 @@
       justify-content: center;
       gap: 20px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
     }
+
     section {
       display: none;
       padding-top: 80px;
     }
+
     section.active {
       display: block;
     }
+
     .snowflake {
       position: fixed;
       top: -10px;
@@ -48,10 +53,12 @@
       animation: fall linear infinite;
       z-index: 0;
     }
+
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
+
     .game-grid {
       display: flex;
       justify-content: center;
@@ -59,13 +66,35 @@
       gap: 20px;
       margin-top: 40px;
     }
-    .game-grid iframe {
-      border: none;
-      width: 300px;
-      height: 400px;
+
+    .game-tile {
+      background: #222;
+      padding: 10px;
+      border-radius: 10px;
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
     }
+
+    .game-tile:hover {
+      transform: scale(1.05);
+    }
+
+    .game-tile img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
     .setting-group {
       margin-top: 30px;
+    }
+
+    .game-iframe {
+      width: 90%;
+      height: 600px;
+      border: none;
+      margin: 20px auto;
+      display: block;
     }
   </style>
 </head>
@@ -89,8 +118,10 @@
   <section id="games">
     <h1>Games</h1>
     <div class="game-grid">
-      <iframe src="https://tic-tac-toe-free.com/"></iframe>
-      <iframe src="https://play2048.co/"></iframe>
+      <div class="game-tile" onclick="openGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">
+        <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
+        <p>Basket Hoop</p>
+      </div>
     </div>
   </section>
 
@@ -106,10 +137,10 @@
   <section id="updates">
     <h1>Update Log</h1>
     <ul style="text-align:left; max-width:600px; margin:auto;">
-      <li>✔ Added working snowfall</li>
-      <li>✔ Games: Tic Tac Toe & 2048 embedded</li>
-      <li>✔ Added Credits, Panic, and Settings tab</li>
-      <li>✔ Settings allows background switch to ReaperPlays avatar</li>
+      <li>✔ Basket Hoop game added</li>
+      <li>✔ Working snow background</li>
+      <li>✔ Background switcher in settings</li>
+      <li>✔ Tabs: Home, Games, Apps, Credits, Updates, Settings</li>
     </ul>
   </section>
 
@@ -118,7 +149,7 @@
     <div class="setting-group">
       <p>Background Style:</p>
       <label><input type="radio" name="bg" value="snow" checked> Snow (Default)</label><br>
-      <label><input type="radio" name="bg" value="custom"> ReaperPlays3515 Avatar</label>
+      <label><input type="radio" name="bg" value="custom"> ReaperPlays Avatar</label>
     </div>
   </section>
 
@@ -137,14 +168,15 @@
     let snowInterval = setInterval(createSnowflake, 100);
   </script>
 
-  <!-- NAV SCRIPT -->
+  <!-- SECTION SCRIPT -->
   <script>
     function showSection(id) {
       document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
+
     function panic() {
-      window.location.href = "https://classroom.google.com"; // panic redirect
+      window.location.href = "https://classroom.google.com";
     }
   </script>
 
@@ -163,6 +195,10 @@
         }
       });
     });
+
+    function openGame(url) {
+      window.open(url, "_blank");
+    }
   </script>
 
 </body>
