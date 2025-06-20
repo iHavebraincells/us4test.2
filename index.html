@@ -55,14 +55,14 @@
       animation: fall linear infinite;
     }
 
-    .game-grid {
+    .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
 
-    .game-card {
+    .card {
       background: #111;
       border: 1px solid #333;
       border-radius: 10px;
@@ -70,12 +70,14 @@
       padding: 10px;
     }
 
-    .game-card img {
+    .card img {
       width: 100%;
+      height: 100px;
+      object-fit: contain;
       border-radius: 5px;
     }
 
-    .game-card button {
+    .card button {
       margin-top: 10px;
       padding: 5px 10px;
       background: #444;
@@ -89,6 +91,7 @@
       width: 100%;
       height: 600px;
       border: none;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -111,25 +114,18 @@
 
   <div id="games" class="tab-content">
     <h1>Games</h1>
-    <div class="game-grid" id="gameGrid"></div>
-    <div id="gameFrameContainer" style="margin-top: 20px;"></div>
+    <div class="grid" id="gameGrid"></div>
+    <div id="gameFrameContainer"></div>
   </div>
 
   <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <h3>Google Search</h3>
-    <iframe src="https://www.google.com/search?igu=1"></iframe>
-
-    <h3>Discord Chat</h3>
-    <iframe src="https://e.widgetbot.io/channels/your-server-id/your-channel-id" width="100%" height="500"></iframe>
-
-    <h3>GitHub</h3>
-    <p><a href="https://github.com" target="_blank">Open GitHub</a></p>
+    <div class="grid" id="appGrid"></div>
+    <div id="appFrameContainer"></div>
   </div>
 
   <div id="proxy" class="tab-content">
     <h1>Proxy</h1>
-    <p>Google Proxy Example:</p>
     <iframe src="https://www.google.com/search?igu=1"></iframe>
   </div>
 
@@ -146,10 +142,10 @@
   <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>✔ Tabs added: Home, Games, Apps, Proxy, Credits, Settings, Log</li>
-      <li>✔ Falling snow effect</li>
-      <li>✔ Game iframe + grid support</li>
-      <li>✔ Proxy embed + app previews</li>
+      <li>✅ Snowfall background</li>
+      <li>✅ Tabs: Home, Games, Apps, Proxy, Credits, Settings, Log</li>
+      <li>✅ App + Game Grids</li>
+      <li>✅ Apps open in-page (iframe)</li>
     </ul>
   </div>
 
@@ -158,38 +154,6 @@
     function showTab(id) {
       tabs.forEach(tab => tab.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-    }
-
-    const games = [
-      {
-        title: "Basket Hoop",
-        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
-      },
-      {
-        title: "Capybara Clicker Pro",
-        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
-        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
-      }
-      // Add more games here...
-    ];
-
-    const gameGrid = document.getElementById("gameGrid");
-    const gameFrameContainer = document.getElementById("gameFrameContainer");
-
-    games.forEach(game => {
-      const card = document.createElement("div");
-      card.className = "game-card";
-      card.innerHTML = `
-        <img src="${game.image}" alt="${game.title}" />
-        <h3>${game.title}</h3>
-        <button onclick="loadGame('${game.embed}')">Play</button>
-      `;
-      gameGrid.appendChild(card);
-    });
-
-    function loadGame(embedUrl) {
-      gameFrameContainer.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
     }
 
     function createSnowflake() {
@@ -203,7 +167,81 @@
       setTimeout(() => snowflake.remove(), 5000);
     }
     setInterval(createSnowflake, 100);
+
+    const games = [
+      {
+        title: "Basket Hoop",
+        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
+      },
+      {
+        title: "Capybara Clicker Pro",
+        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
+        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
+      }
+    ];
+
+    const apps = [
+      {
+        title: "Google",
+        embed: "https://www.google.com",
+        image: "https://ssl.gstatic.com/images/branding/product/1x/googleg_64dp.png"
+      },
+      {
+        title: "Discord",
+        embed: "https://discord.com",
+        image: "https://cdn.worldvectorlogo.com/logos/discord-6.svg"
+      },
+      {
+        title: "GitHub",
+        embed: "https://github.com",
+        image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+      },
+      {
+        title: "YouTube",
+        embed: "https://youtube.com",
+        image: "https://www.youtube.com/s/desktop/53767f63/img/favicon_144x144.png"
+      },
+      {
+        title: "Spotify",
+        embed: "https://open.spotify.com",
+        image: "https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Icon_RGB_White.png"
+      }
+    ];
+
+    const gameGrid = document.getElementById("gameGrid");
+    const gameFrameContainer = document.getElementById("gameFrameContainer");
+    games.forEach(game => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${game.image}" alt="${game.title}" />
+        <h3>${game.title}</h3>
+        <button onclick="loadGame('${game.embed}')">Play</button>
+      `;
+      gameGrid.appendChild(card);
+    });
+
+    function loadGame(url) {
+      gameFrameContainer.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+    }
+
+    const appGrid = document.getElementById("appGrid");
+    const appFrameContainer = document.getElementById("appFrameContainer");
+    apps.forEach(app => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${app.image}" alt="${app.title}" />
+        <h3>${app.title}</h3>
+        <button onclick="loadApp('${app.embed}')">Open</button>
+      `;
+      appGrid.appendChild(card);
+    });
+
+    function loadApp(url) {
+      appFrameContainer.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+    }
   </script>
 </body>
 </html>
-
