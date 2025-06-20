@@ -15,42 +15,50 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      overflow-x: hidden;
       text-align: center;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: none;
+      border: 2px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    nav button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    section {
+      display: none;
+      padding: 40px 20px;
+    }
+
+    section.active {
+      display: block;
     }
 
     h1 {
-      font-size: 3rem;
-      margin-top: 60px;
+      font-size: 3em;
+      margin: 30px 0 10px;
     }
 
     p {
-      font-size: 1.5rem;
-      margin-bottom: 30px;
-    }
-
-    .section {
-      padding: 60px 20px;
-      border-top: 2px solid white;
-    }
-
-    .button {
-      display: inline-block;
-      background-color: #222;
-      border: 2px solid white;
-      color: white;
-      padding: 15px 30px;
-      margin: 10px;
-      font-size: 1.2rem;
-      text-decoration: none;
-      border-radius: 10px;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .button:hover {
-      background-color: white;
-      color: black;
-      transform: scale(1.05);
+      font-size: 1.3em;
     }
 
     .snowflake {
@@ -64,41 +72,57 @@
     }
 
     @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Main Welcome -->
-  <h1>Welcome to bashW</h1>
-  <p>Unblock the web with style.</p>
+  <nav>
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('games')">Games</button>
+    <button onclick="showSection('apps')">Apps</button>
+    <button onclick="showSection('credits')">Credits</button>
+    <button onclick="panic()">Panic</button>
+  </nav>
 
-  <!-- Games Section -->
-  <div class="section" id="games">
-    <h1>🎮 Games</h1>
-    <p>Games will go here. Coming soon!</p>
-    <!-- Example button or embed later -->
-    <a class="button" href="#">Game 1</a>
-    <a class="button" href="#">Game 2</a>
-  </div>
+  <section id="home" class="active">
+    <h1>Welcome to bashW</h1>
+    <p>Unblock the web with style.</p>
+  </section>
 
-  <!-- Apps Section -->
-  <div class="section" id="apps">
-    <h1>📱 Apps</h1>
-    <p>Apps will go here. Coming soon!</p>
-    <a class="button" href="#">App 1</a>
-    <a class="button" href="#">App 2</a>
-  </div>
+  <section id="games">
+    <h1>Games</h1>
+    <p>Games coming soon...</p>
+  </section>
 
-  <!-- Credits Section -->
-  <div class="section" id="credits">
-    <h1>💡 Credits</h1>
-    <p style="font-size: 2rem;">credits to us4 team and bash working on #bashW</p>
-  </div>
+  <section id="apps">
+    <h1>Apps</h1>
+    <p>Apps coming soon...</p>
+  </section>
 
-  <!-- Snowfall Script -->
+  <section id="credits">
+    <h1>credits to us4 team and bash working on #bashW</h1>
+  </section>
+
   <script>
+    function showSection(id) {
+      document.querySelectorAll("section").forEach((sec) => {
+        sec.classList.remove("active");
+      });
+      document.getElementById(id).classList.add("active");
+    }
+
+    function panic() {
+      window.location.href = "https://classroom.google.com";
+    }
+
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
@@ -114,4 +138,3 @@
   </script>
 </body>
 </html>
-
