@@ -8,47 +8,55 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: black;
       color: white;
-      overflow-x: hidden;
+      font-family: Arial, sans-serif;
       text-align: center;
     }
 
     nav {
-      background: #111;
+      background-color: #222;
       padding: 10px;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     nav button {
-      background: #222;
+      background: #444;
       border: none;
       color: white;
-      padding: 10px 20px;
+      padding: 10px 15px;
+      margin: 5px;
       cursor: pointer;
-      font-size: 1em;
+      border-radius: 5px;
     }
 
-    section {
+    nav button:hover {
+      background: #666;
+    }
+
+    .tab-content {
       display: none;
-      padding: 30px;
+      padding: 20px;
     }
 
-    section.active {
+    .active {
       display: block;
     }
 
     .snowflake {
       position: fixed;
       top: -10px;
-      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
+      font-size: 1em;
       animation: fall linear infinite;
+      z-index: 9999;
     }
 
     @keyframes fall {
@@ -64,180 +72,164 @@
     }
 
     .game-card {
-      background: #222;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      width: 250px;
       padding: 10px;
-      border: 1px solid #444;
-      width: 200px;
     }
 
     .game-card img {
       width: 100%;
-      height: auto;
+      border-radius: 5px;
+    }
+
+    .game-card button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background: #444;
+      border: none;
+      color: white;
+      border-radius: 5px;
       cursor: pointer;
     }
 
     iframe {
-      width: 90%;
+      width: 100%;
       height: 600px;
       border: none;
-      margin-top: 20px;
-    }
-
-    label {
-      font-size: 1.2em;
-    }
-
-    input[type="checkbox"] {
-      transform: scale(1.5);
-      margin-left: 10px;
     }
   </style>
 </head>
 <body>
-
   <nav>
     <button onclick="showTab('home')">Home</button>
     <button onclick="showTab('games')">Games</button>
     <button onclick="showTab('apps')">Apps</button>
+    <button onclick="showTab('proxy')">Proxy</button>
     <button onclick="showTab('credits')">Credits</button>
-    <button onclick="showTab('updates')">Update Log</button>
     <button onclick="showTab('settings')">Settings</button>
+    <button onclick="showTab('log')">Update Log</button>
   </nav>
 
-  <section id="home" class="active">
+  <div id="home" class="tab-content active">
     <h1>Welcome to bashW</h1>
     <p>Unblock the web with style.</p>
-  </section>
+  </div>
 
-  <section id="games">
+  <div id="games" class="tab-content">
     <h1>Games</h1>
     <div class="game-grid" id="gameGrid"></div>
-    <div id="gameFrameContainer"></div>
-  </section>
+    <div id="gameFrameContainer" style="margin-top: 20px;"></div>
+  </div>
 
-  <section id="apps">
+  <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <h3>Calculator</h3>
-    <input id="calcInput" placeholder="2+2" />
-    <button onclick="document.getElementById('calcResult').textContent = eval(document.getElementById('calcInput').value)">Run</button>
-    <p id="calcResult"></p>
+    <iframe src="https://www.google.com" title="Google"></iframe>
+    <iframe src="https://discord.com" title="Discord"></iframe>
+    <iframe src="https://github.com" title="GitHub"></iframe>
+  </div>
 
-    <h3>JavaScript Executor</h3>
-    <textarea id="jsExec" rows="5" cols="40" placeholder="alert('Hello!')"></textarea><br/>
-    <button onclick="eval(document.getElementById('jsExec').value)">Execute</button>
-  </section>
+  <div id="proxy" class="tab-content">
+    <h1>Google Proxy</h1>
+    <iframe src="https://www.google.com/search?q=proxy" title="Proxy Search"></iframe>
+  </div>
 
-  <section id="credits">
-    <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
-  </section>
+  <div id="credits" class="tab-content">
+    <h1 style="font-size: 2.5em;">Credits</h1>
+    <p>Credits to the US4 team and bash working on #bashW</p>
+  </div>
 
-  <section id="updates">
+  <div id="settings" class="tab-content">
+    <h1>Settings</h1>
+    <p>More backgrounds and options coming soon.</p>
+  </div>
+
+  <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>✔️ Added multiple games with thumbnails</li>
-      <li>✔️ Anti-tab-close added to Settings</li>
-      <li>✔️ JS Executor & Calculator added to Apps</li>
+      <li>✅ Snowfall background added</li>
+      <li>✅ Tabs: Home, Games, Apps, Proxy, Credits, Settings</li>
+      <li>✅ Game embeds with cards</li>
+      <li>✅ Apps: Google, Discord, GitHub</li>
+      <li>✅ Proxy embed added</li>
+      <li>✅ You’re viewing: v1.0</li>
     </ul>
-  </section>
+  </div>
 
-  <section id="settings">
-    <h1>Settings</h1>
-    <label>Anti-Tab-Close Protection
-      <input type="checkbox" id="protectClose" onchange="toggleTabProtection(this.checked)">
-    </label>
-  </section>
-
-  <!-- Snowfall -->
-  <script>
-    function createSnowflake() {
-      const snow = document.createElement("div");
-      snow.className = "snowflake";
-      snow.textContent = "❄";
-      snow.style.left = Math.random() * window.innerWidth + "px";
-      snow.style.fontSize = Math.random() * 10 + 10 + "px";
-      snow.style.animationDuration = Math.random() * 5 + 2 + "s";
-      document.body.appendChild(snow);
-      setTimeout(() => snow.remove(), 7000);
-    }
-    setInterval(createSnowflake, 100);
-  </script>
-
-  <!-- Tabs -->
-  <script>
-    function showTab(tabId) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(tabId).classList.add("active");
-      document.getElementById("gameFrameContainer").innerHTML = ""; // reset game viewer
-    }
-  </script>
-
-  <!-- Game Cards -->
   <script>
     const games = [
       {
+        title: "Basket Hoop",
+        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg",
+      },
+      {
         title: "Apocalypse Truck",
         embed: "https://cloud.onlinegames.io/games/2021/1/apocalypse-truck/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1015/responsive/apocalypse-truck-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/1015/responsive/apocalypse-truck-xs.jpg",
       },
       {
         title: "Kick the Pirate",
         embed: "https://cloud.onlinegames.io/games/2022/construct/92/kick-the-pirate/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1012/responsive/Kick-The-Pirate-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/1012/responsive/Kick-The-Pirate-xs.jpg",
       },
       {
         title: "Julie Beauty Salon",
         embed: "https://cloud.onlinegames.io/games/2021/1/julie-beauty-salon/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1011/responsive/Julie-Beauty-Salon-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/1011/responsive/Julie-Beauty-Salon-xs.jpg",
       },
       {
         title: "Mini Cars Racing",
         embed: "https://cloud.onlinegames.io/games/2021/unity/mini-cars-racing/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1010/responsive/Mini-Cars-Racing-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/1010/responsive/Mini-Cars-Racing-xs.jpg",
       },
       {
         title: "Pyramid Solitaire",
         embed: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html#pyramid",
-        image: "https://www.onlinegames.io/media/posts/1006/responsive/pyramid-Solitaire-xs.jpg"
-      },
-      {
-        title: "Solitaire",
-        embed: "https://cloud.onlinegames.io/games/2025/html/solitaire/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/1007/responsive/solitaire-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/1006/responsive/pyramid-Solitaire-xs.jpg",
       },
       {
         title: "Drift King",
         embed: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html",
-        image: "https://www.onlinegames.io/media/posts/729/responsive/Drift-King-xs.jpg"
+        image: "https://www.onlinegames.io/media/posts/729/responsive/Drift-King-xs.jpg",
       }
     ];
 
+    function showTab(id) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     const gameGrid = document.getElementById("gameGrid");
-    games.forEach(game => {
-      const div = document.createElement("div");
-      div.className = "game-card";
-      div.innerHTML = `<img src="${game.image}" alt="${game.title}" onclick="loadGame('${game.embed}')"><p>${game.title}</p>`;
-      gameGrid.appendChild(div);
+    games.forEach((game, i) => {
+      const card = document.createElement("div");
+      card.className = "game-card";
+      card.innerHTML = `
+        <img src="${game.image}" alt="${game.title}">
+        <h3>${game.title}</h3>
+        <button onclick="loadGame('${game.embed}')">Play</button>
+      `;
+      gameGrid.appendChild(card);
     });
 
     function loadGame(url) {
       document.getElementById("gameFrameContainer").innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-    }
-  </script>
-
-  <!-- Anti Tab Close -->
-  <script>
-    let tabProtect = false;
-    function toggleTabProtection(enabled) {
-      tabProtect = enabled;
+      showTab("games");
     }
 
-    window.addEventListener("beforeunload", function (e) {
-      if (tabProtect) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    });
-  </script>
+    function createSnowflake() {
+      const flake = document.createElement("div");
+      flake.className = "snowflake";
+      flake.textContent = "❄";
+      flake.style.left = Math.random() * window.innerWidth + "px";
+      flake.style.fontSize = Math.random() * 10 + 10 + "px";
+      flake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      document.body.appendChild(flake);
+      setTimeout(() => flake.remove(), 5000);
+    }
 
+    setInterval(createSnowflake, 100);
+  </script>
 </body>
 </html>
