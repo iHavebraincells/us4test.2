@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bashW</title>
   <style>
     body {
@@ -10,72 +11,61 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      overflow-x: hidden;
     }
-
     nav {
-      background: #111;
+      background: #222;
       padding: 10px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
     }
-
     nav button {
-      margin: 5px;
-      padding: 10px 15px;
-      background: #222;
-      border: none;
+      background: #444;
       color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
       cursor: pointer;
       border-radius: 5px;
     }
-
     .tab-content {
       display: none;
       padding: 20px;
     }
-
     .tab-content.active {
       display: block;
     }
-
     .snowflake {
       position: fixed;
       top: -10px;
-      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
       animation: fall linear infinite;
+      z-index: 9999;
     }
-
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
-
-    .game-grid, .app-grid {
+    .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
-
-    .game-card, .app-card {
+    .card {
       background: #111;
       border: 1px solid #333;
       border-radius: 10px;
       width: 250px;
       padding: 10px;
     }
-
-    .game-card img, .app-card img {
+    .card img {
       width: 100%;
       border-radius: 5px;
     }
-
-    .game-card button, .app-card button {
+    .card button {
       margin-top: 10px;
       padding: 5px 10px;
       background: #444;
@@ -84,33 +74,28 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     iframe {
       width: 100%;
       height: 600px;
       border: none;
     }
-
     form input, form textarea {
-      width: 80%;
-      margin: 10px 0;
+      width: 90%;
       padding: 10px;
+      margin: 10px 0;
       border-radius: 5px;
       border: none;
     }
-
     form button {
       padding: 10px 20px;
-      background: #333;
+      background: #444;
       color: white;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
-
   <nav>
     <button onclick="showTab('home')">Home</button>
     <button onclick="showTab('games')">Games</button>
@@ -119,7 +104,7 @@
     <button onclick="showTab('credits')">Credits</button>
     <button onclick="showTab('settings')">Settings</button>
     <button onclick="showTab('log')">Update Log</button>
-    <button onclick="showTab('apply')">Apply</button>
+    <button onclick="showTab('apply')">Application</button>
   </nav>
 
   <div id="home" class="tab-content active">
@@ -129,37 +114,33 @@
 
   <div id="games" class="tab-content">
     <h1>Games</h1>
-    <div class="game-grid">
-      <div class="game-card">
+    <div class="grid">
+      <div class="card">
         <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg">
-        <button onclick="openGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">Play Basket Hoop</button>
+        <p>Basket Hoop</p>
+        <button onclick="openGame('https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html')">Play</button>
       </div>
     </div>
-    <div id="gameFrameContainer"></div>
+    <div id="gameFrame"></div>
   </div>
 
   <div id="apps" class="tab-content">
     <h1>Apps</h1>
-    <div class="app-grid">
-      <div class="app-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
-        <button onclick="openApp('https://www.google.com')">Open Google</button>
+    <div class="grid">
+      <div class="card">
+        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico">
+        <p>Google</p>
+        <button onclick="window.location.href='https://www.google.com'">Open</button>
       </div>
-      <div class="app-card">
-        <img src="https://cdn.iconscout.com/icon/free/png-256/discord-2752210-2285027.png">
-        <button onclick="openApp('https://discord.com')">Open Discord</button>
+      <div class="card">
+        <img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico">
+        <p>Discord</p>
+        <button onclick="window.location.href='https://discord.com'">Open</button>
       </div>
-      <div class="app-card">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
-        <button onclick="openApp('https://github.com')">Open GitHub</button>
-      </div>
-      <div class="app-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
-        <button onclick="openApp('https://www.youtube.com')">Open YouTube</button>
-      </div>
-      <div class="app-card">
-        <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2022/09/Spotify_Logo_CMYK_Green.png">
-        <button onclick="openApp('https://spotify.com')">Open Spotify</button>
+      <div class="card">
+        <img src="https://github.githubassets.com/favicons/favicon.png">
+        <p>GitHub</p>
+        <button onclick="window.location.href='https://github.com'">Open</button>
       </div>
     </div>
   </div>
@@ -176,42 +157,43 @@
 
   <div id="settings" class="tab-content">
     <h1>Settings</h1>
-    <p>Backgrounds and options coming soon.</p>
+    <p>Backgrounds and more features coming soon.</p>
   </div>
 
   <div id="log" class="tab-content">
     <h1>Update Log</h1>
     <ul>
-      <li>Added snow background</li>
-      <li>Games section works</li>
-      <li>Apps and proxy added</li>
-      <li>Apply tab added</li>
+      <li>✔ Games and Apps tab working</li>
+      <li>✔ Added snowfall and theme</li>
+      <li>✔ Application tab added</li>
     </ul>
   </div>
 
   <div id="apply" class="tab-content">
     <h1>Apply to Join bashW</h1>
-    <form onsubmit="event.preventDefault(); alert('Application submitted!'); this.reset();">
-      <input type="text" placeholder="Your Name" required><br>
-      <input type="email" placeholder="Your Email" required><br>
-      <textarea rows="4" placeholder="Why do you want to join bashW?" required></textarea><br>
+    <form action="https://formspree.io/f/xkgbvvzq" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Why should you join bashW?" required></textarea>
       <button type="submit">Submit Application</button>
     </form>
   </div>
 
   <script>
     function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
       document.getElementById(tabId).classList.add('active');
     }
 
     function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.classList.add('snowflake');
-      snowflake.textContent = '❄';
-      snowflake.style.left = Math.random() * window.innerWidth + 'px';
-      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.textContent = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
@@ -219,13 +201,9 @@
     setInterval(createSnowflake, 100);
 
     function openGame(url) {
-      document.getElementById('gameFrameContainer').innerHTML = `<iframe src="${url}"></iframe>`;
-    }
-
-    function openApp(url) {
-      window.location.href = url;
+      document.getElementById('gameFrame').innerHTML = `<iframe src="${url}"></iframe>`;
     }
   </script>
-
 </body>
 </html>
+
