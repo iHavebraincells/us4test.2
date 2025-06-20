@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -57,8 +57,20 @@
       margin: 30px 0 10px;
     }
 
-    p {
-      font-size: 1.3em;
+    p.corner {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    iframe {
+      width: 90%;
+      height: 500px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 12px;
     }
 
     .snowflake {
@@ -84,6 +96,11 @@
   </style>
 </head>
 <body>
+  <!-- Music (auto plays) -->
+  <audio autoplay loop hidden>
+    <source src="https://files.catbox.moe/uvtw7v.mp3" type="audio/mpeg">
+  </audio>
+
   <nav>
     <button onclick="showSection('home')">Home</button>
     <button onclick="showSection('games')">Games</button>
@@ -94,12 +111,12 @@
 
   <section id="home" class="active">
     <h1>Welcome to bashW</h1>
-    <p>Unblock the web with style.</p>
+    <p class="corner">Unblock the web with style.</p>
   </section>
 
   <section id="games">
     <h1>Games</h1>
-    <p>Games coming soon...</p>
+    <iframe src="https://ubg98.github.io/bitlife/" allowfullscreen></iframe>
   </section>
 
   <section id="apps">
