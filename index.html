@@ -15,13 +15,40 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      overflow: hidden;
       text-align: center;
+      overflow-x: hidden;
     }
 
-    h1 {
-      font-size: 3rem;
-      margin-top: 100px;
+    nav {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav button {
+      background: none;
+      border: 1px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    nav button:hover {
+      background: white;
+      color: black;
+    }
+
+    .page {
+      display: none;
+      padding: 40px;
+    }
+
+    .page.active {
+      display: block;
     }
 
     .snowflake {
@@ -44,17 +71,41 @@
         opacity: 0;
       }
     }
+
+    #credits h1 {
+      font-size: 3em;
+      margin-top: 100px;
+    }
+
+    #home h1 {
+      margin-top: 80px;
+      font-size: 2.5em;
+    }
   </style>
 </head>
 <body>
-  <h1>Welcome to bashW</h1>
-  <p>Unblock the web with style.</p>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('credits')">Credits</button>
+  </nav>
 
-  <h1 style="font-size: 3em; margin-top: 40px;">
-    credits to us4 team and bash working on #bashW
-  </h1>
+  <div id="home" class="page active">
+    <h1>Welcome to bashW</h1>
+    <p>Unblock the web with style.</p>
+  </div>
+
+  <div id="credits" class="page">
+    <h1>credits to us4 team and bash working on #bashW</h1>
+  </div>
 
   <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
