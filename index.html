@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
   <link rel="icon" href="/static/logo.png" type="image/png" />
   <script src="/static/uv/uv.bundle.js" defer></script>
@@ -18,40 +19,31 @@
     }
 
     nav {
-      background: #111;
-      padding: 10px;
       display: flex;
       justify-content: center;
-      gap: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      background: #111;
+      padding: 15px;
+      gap: 20px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      font-size: 1.2em;
-      padding: 8px 12px;
-      border-radius: 5px;
-      background: #222;
-      transition: background 0.3s;
+      font-size: 18px;
+      transition: 0.3s;
     }
 
     nav a:hover {
-      background: #333;
+      color: #00ffff;
     }
 
     section {
-      padding: 40px 20px;
+      display: none;
+      padding: 20px;
     }
 
-    iframe {
-      width: 90%;
-      max-width: 900px;
-      height: 600px;
-      border: none;
-      margin: 20px 0;
+    section.active {
+      display: block;
     }
 
     .snowflake {
@@ -65,28 +57,22 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <nav>
-    <a href="#home">Home</a>
-    <a href="#games">Games</a>
-    <a href="#apps">Apps</a>
-    <a href="#credits">Credits</a>
+    <a href="#home" onclick="showSection('home')">Home</a>
+    <a href="#games" onclick="showSection('games')">Games</a>
+    <a href="#apps" onclick="showSection('apps')">Apps</a>
+    <a href="#credits" onclick="showSection('credits')">Credits</a>
     <a href="#panic" onclick="panic()">Panic</a>
   </nav>
 
-  <section id="home">
-    <h1 style="font-size: 3em;">Welcome to bashW</h1>
+  <section id="home" class="active">
+    <h1 style="font-size: 3em; margin-top: 40px;">Welcome to bashW</h1>
     <p>Unblock the web with style.</p>
   </section>
 
@@ -94,27 +80,32 @@
     <h1>Games</h1>
 
     <h2>Tic Tac Toe</h2>
-    <iframe src="https://playtictactoe.org/"></iframe>
+    <iframe src="https://tic-tac-toe-free.vercel.app/" width="100%" height="500px" style="border:none;"></iframe>
 
     <h2>2048</h2>
-    <iframe src="https://play2048.co/"></iframe>
+    <iframe src="https://ubg98.github.io/2048/" width="100%" height="500px" style="border:none;"></iframe>
 
-    <h2>Harry the Stickman</h2>
-    <iframe src="https://ubg100.github.io/HenryStickminBreakingTheBank/" allowfullscreen></iframe>
+    <h2>Fleeing the Complex (Henry Stickmin)</h2>
+    <iframe src="https://ubg98.github.io/fleeing-the-complex/" width="100%" height="600px" style="border:none;"></iframe>
   </section>
 
   <section id="apps">
     <h1>Apps</h1>
-    <p>Add your app iframes here later.</p>
+    <p>Coming soon...</p>
   </section>
 
   <section id="credits">
-    <h1 style="font-size: 3em;">credits to us4 team and bash working on #bashW</h1>
+    <h1 style="font-size: 2.5em;">credits to us4 team and bash working on #bashW</h1>
   </section>
 
   <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     function panic() {
-      window.location.replace("https://classroom.google.com");
+      window.location.href = 'https://classroom.google.com';
     }
 
     function createSnowflake() {
@@ -127,6 +118,7 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
+
     setInterval(createSnowflake, 100);
   </script>
 </body>
