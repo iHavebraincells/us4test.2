@@ -1,0 +1,1 @@
+// Register service worker placeholder
