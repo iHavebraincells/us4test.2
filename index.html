@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>bashW</title>
-  <link rel="icon" href="/static/logo.png" type="image/png" />
+  <link rel="icon" href="/static/logo.png" type="image/png"/>
   <script src="/static/uv/uv.bundle.js" defer></script>
   <script src="/static/uv/uv.config.js" defer></script>
   <script src="/register-sw.js" defer></script>
@@ -24,7 +24,6 @@
       background: #111;
       padding: 15px;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
     nav a {
@@ -61,9 +60,63 @@
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
     }
+
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .game-card {
+      width: 150px;
+      height: 150px;
+      background: #222;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .game-card img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      background: red;
+      padding: 10px 15px;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a href="#home" onclick="showSection('home')">Home</a>
     <a href="#games" onclick="showSection('games')">Games</a>
@@ -72,46 +125,51 @@
     <a href="#panic" onclick="panic()">Panic</a>
   </nav>
 
-  <!-- Home Section -->
   <section id="home" class="active">
     <h1 style="font-size: 3em; margin-top: 40px;">Welcome to bashW</h1>
     <p>Unblock the web with style.</p>
   </section>
 
-  <!-- Games Section -->
   <section id="games">
     <h1>Games</h1>
-
-    <h2>Tic Tac Toe</h2>
-    <iframe src="https://tic-tac-toe-free.vercel.app/" width="100%" height="500px" style="border:none;"></iframe>
-
-    <h2>2048</h2>
-    <iframe src="https://ubg98.github.io/2048/" width="100%" height="500px" style="border:none;"></iframe>
-
-    <h2>Fleeing the Complex (Henry Stickmin)</h2>
-    <iframe src="https://ubg98.github.io/fleeing-the-complex/" width="100%" height="600px" style="border:none;"></iframe>
+    <div class="game-grid">
+      <div class="game-card" onclick="openGame('https://playtictactoe.org/')">
+        <img src="https://i.imgur.com/kIF0ZOU.png" alt="Tic Tac Toe"/>
+        <span>Tic Tac Toe</span>
+      </div>
+      <div class="game-card" onclick="openGame('https://ubg98.github.io/2048/')">
+        <img src="https://i.imgur.com/sx2XZk7.png" alt="2048"/>
+        <span>2048</span>
+      </div>
+      <div class="game-card" onclick="openGame('https://ubg98.github.io/fleeing-the-complex/')">
+        <img src="https://i.imgur.com/v4TmXzk.png" alt="Henry Stickmin"/>
+        <span>Henry Stickmin</span>
+      </div>
+    </div>
   </section>
 
-  <!-- Apps Section -->
   <section id="apps">
     <h1>Apps</h1>
     <p>Coming soon...</p>
   </section>
 
-  <!-- Credits Section -->
   <section id="credits">
     <h1 style="font-size: 2.5em;">credits to us4 team and bash working on #bashW</h1>
   </section>
 
+  <div class="overlay" id="gameOverlay">
+    <div class="close-btn" onclick="closeGame()">Close</div>
+    <iframe id="gameFrame" src=""></iframe>
+  </div>
+
   <script>
     function showSection(id) {
       document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      const section = document.getElementById(id);
-      if (section) section.classList.add('active');
+      document.getElementById(id).classList.add('active');
     }
 
     function panic() {
-      window.location.href = "https://classroom.google.com";
+      window.location.href = 'https://classroom.google.com';
     }
 
     function createSnowflake() {
@@ -126,6 +184,16 @@
     }
 
     setInterval(createSnowflake, 100);
+
+    function openGame(url) {
+      document.getElementById('gameOverlay').style.display = 'block';
+      document.getElementById('gameFrame').src = url;
+    }
+
+    function closeGame() {
+      document.getElementById('gameOverlay').style.display = 'none';
+      document.getElementById('gameFrame').src = '';
+    }
   </script>
 </body>
 </html>
