@@ -5,10 +5,10 @@
   <title>bashW</title>
   <style>
     body {
-      background-color: black;
+      background: black;
       color: white;
-      text-align: center;
       font-family: Arial, sans-serif;
+      text-align: center;
       margin: 0;
       padding: 0;
     }
@@ -22,29 +22,38 @@
       font-size: 1.5em;
     }
 
-    #volumeControl {
-      margin-top: 20px;
-    }
-
     .snowflake {
       position: fixed;
       top: -10px;
+      z-index: 9999;
       color: white;
       user-select: none;
       pointer-events: none;
       animation: fall linear infinite;
-      z-index: 9999;
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    #volumeControl {
+      margin-top: 20px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+    }
+
+    #clickToStart {
+      margin-top: 20px;
+      font-size: 1.2em;
+      background: #222;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -52,31 +61,31 @@
   <h1>Welcome to bashW</h1>
   <p>Unblock the web with style.</p>
 
-  <div id="volumeControl">
+  <button id="clickToStart">▶ Click to Start Music</button>
+
+  <div id="volumeControl" style="display:none;">
     <label for="volume">🔊 Volume:</label>
     <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
   </div>
 
   <script>
-    // Create and autoplay audio
     const audio = new Audio("https://files.catbox.moe/9midhh.mp3");
     audio.loop = true;
     audio.volume = 0.5;
 
-    // Wait for user interaction (required by some browsers)
-    window.addEventListener("click", () => {
-      if (audio.paused) {
-        audio.play().catch(e => console.error("Playback error:", e));
-      }
-    }, { once: true });
-
-    // Volume control
-    const volumeSlider = document.getElementById("volume");
-    volumeSlider.addEventListener("input", () => {
-      audio.volume = volumeSlider.value;
+    document.getElementById("clickToStart").addEventListener("click", () => {
+      audio.play().then(() => {
+        document.getElementById("clickToStart").style.display = "none";
+        document.getElementById("volumeControl").style.display = "block";
+      }).catch((e) => {
+        alert("Audio playback failed: " + e);
+      });
     });
 
-    // Snowfall effect
+    document.getElementById("volume").addEventListener("input", function () {
+      audio.volume = this.value;
+    });
+
     function createSnowflake() {
       const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
@@ -87,6 +96,7 @@
       document.body.appendChild(snowflake);
       setTimeout(() => snowflake.remove(), 5000);
     }
+
     setInterval(createSnowflake, 100);
   </script>
 </body>
