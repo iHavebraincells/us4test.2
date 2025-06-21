@@ -1,4 +1,9 @@
-importScripts('./uv.bundle.js');
-importScripts('./uv.config.js');
-const sw = new UVServiceWorker();
-self.addEventListener('fetch', e => e.respondWith(sw.fetch(e)));
+window.__uv$config = {
+  prefix: '/service/',
+  encodeUrl: Ultraviolet.codec.xor.encode,
+  decodeUrl: Ultraviolet.codec.xor.decode,
+};window.__uv$config = {
+  prefix: '/service/',
+  encodeUrl: Ultraviolet.codec.xor.encode,
+  decodeUrl: Ultraviolet.codec.xor.decode,
+};
