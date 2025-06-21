@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>bashW - Credits</title>
+  <meta charset="UTF-8">
+  <title>bashW – Credits</title>
   <style>
     body {
       margin: 0;
@@ -11,55 +11,35 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
-
     nav {
       background: #111;
       padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-
     nav a {
       color: white;
-      margin: 0 10px;
+      margin: 5px 10px;
       text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      border-radius: 5px;
     }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 2.5em;
+    nav a:hover {
+      border-color: white;
     }
-
-    .credit-list {
-      margin-top: 30px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      background: #111;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .credit-list ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .credit-list li {
-      margin-bottom: 10px;
-    }
-
     .snowflake {
       position: fixed;
-      top: -10px;
+      top: -5%;
       color: white;
-      font-size: 1em;
       user-select: none;
+      pointer-events: none;
       animation: fall linear infinite;
     }
-
     @keyframes fall {
       to {
-        transform: translateY(100vh);
+        transform: translateY(110vh);
         opacity: 0;
       }
     }
@@ -73,32 +53,42 @@
     <a href="proxy.html">Proxy</a>
     <a href="apply.html">Apply</a>
     <a href="credits.html">Credits</a>
+    <a href="log.html">Update Log</a>
   </nav>
 
   <h1>Credits</h1>
-  <div class="credit-list">
-    <ul>
-      <li><strong>bash:</strong> Site creator, builder & project lead</li>
-      <li><strong>US4 Project:</strong> Design inspiration and structure base</li>
-      <li><strong>Ultraviolet Proxy:</strong> Proxy engine backbone</li>
-      <li><strong>OnlineGames.io:</strong> Source for embeddable games</li>
-      <li><strong>Formspree:</strong> Form handling backend</li>
-      <li><strong>OpenAI ChatGPT:</strong> Helped write code & structure project</li>
-      <li><strong>Community Testers:</strong> Everyone who helped test in school networks</li>
-    </ul>
-  </div>
+  <p>Developed by bashW Team</p>
+  <p>Powered by Ultraviolet Proxy</p>
+  <p>Games provided by onlinegames.io</p>
+  <p>Snow effect and this whole site inspired by US4</p>
 
   <script>
-    // Snow effect
-    setInterval(() => {
-      const snowflake = document.createElement("div");
-      snowflake.className = "snowflake";
-      snowflake.style.left = Math.random() * 100 + "vw";
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      snowflake.innerText = "❄";
-      document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
-    }, 150);
+    function createSnow() {
+      const s = document.createElement('div');
+      s.className = 'snowflake';
+      s.textContent = '❄';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.fontSize = (10 + Math.random() * 20) + 'px';
+      s.style.animationDuration = (3 + Math.random() * 4) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 8000);
+    }
+    setInterval(createSnow, 150);
+
+    // GoGuardian detection
+    const goGuardianExtensions = [
+      "haldlgldplgnggkjaafhelgiaglafanh",
+      "kmffehbidlalibfeklaefnckpidbodff",
+      "bepbmhgboaologfdajaanbcjmnhjmhfn"
+    ];
+    goGuardianExtensions.forEach(id => {
+      const img = new Image();
+      img.src = `chrome-extension://${id}/icons/icon128.png`;
+      img.onload = () => {
+        const tab = window.open("goguardian.html", "_blank");
+        if (tab) tab.blur();
+      };
+    });
   </script>
 </body>
 </html>
