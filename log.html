@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>bashW - Update Log</title>
   <style>
     body {
@@ -14,28 +14,30 @@
     nav {
       background: #111;
       padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
     }
-    .content {
-      max-width: 800px;
-      margin: 50px auto;
-      background: #222;
-      padding: 30px;
-      border-radius: 10px;
-    }
-    h1 {
-      color: #00ffff;
-    }
-    ul {
+    .log {
+      padding: 20px;
       text-align: left;
+      max-width: 600px;
+      margin: auto;
+    }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -50,56 +52,34 @@
     <a href="log.html">Update Log</a>
   </nav>
 
-  <div class="content">
-    <h1>Update Log</h1>
-    <ul>
-      <li><strong>v1.0</strong> – Initial bashW project launch</li>
-      <li><strong>v1.1</strong> – Added games and apps pages</li>
-      <li><strong>v1.2</strong> – Embedded working UV proxy</li>
-      <li><strong>v1.3</strong> – Snow effect and improved styling</li>
-      <li><strong>v1.4</strong> – GoGuardian detection system</li>
-      <li><strong>v1.5</strong> – Application page and embed system</li>
-      <li><strong>v1.6</strong> – Grid-based layout and improved loading</li>
-    </ul>
+  <h1>Update Log</h1>
+  <div class="log">
+    <p>✅ Multi-page layout setup</p>
+    <p>✅ Games embedded in scrollable grid</p>
+    <p>✅ Apps routed through embed proxy</p>
+    <p>✅ GoGuardian detection with hidden tab</p>
+    <p>✅ Snow effect on every page</p>
+    <p>✅ Proxy via Ultraviolet with default Google load</p>
+    <p>🆕 All apps now open in-page (not new tab)</p>
   </div>
 
-  <!-- Snow Effect -->
   <script>
     function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.textContent = '❄';
-      snowflake.style.position = 'fixed';
-      snowflake.style.left = Math.random() * 100 + 'vw';
-      snowflake.style.top = '-2em';
-      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
-      snowflake.style.opacity = Math.random();
-      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.textContent = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = 2 + Math.random() * 3 + "s";
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 10000);
+      setTimeout(() => snowflake.remove(), 5000);
     }
+    setInterval(createSnowflake, 100);
 
-    setInterval(createSnowflake, 200);
-
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes fall {
-        to {
-          transform: translateY(100vh);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
-
-  <!-- GoGuardian Detection -->
-  <script>
     const goGuardianExtensions = [
       "haldlgldplgnggkjaafhelgiaglafanh",
       "kmffehbidlalibfeklaefnckpidbodff",
       "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
-
     goGuardianExtensions.forEach(id => {
       const img = new Image();
       img.src = `chrome-extension://${id}/icons/icon128.png`;
