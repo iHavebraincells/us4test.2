@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bashW - Games</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .game-card {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      width: 200px;
+      padding: 10px;
+      text-align: center;
+    }
+    .game-card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .game-card button {
+      margin-top: 8px;
+      padding: 8px;
+      background: #222;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    #gameFrame {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="credits.html">Credits</a>
+    <a href="log.html">Updates</a>
+    <a href="apply.html">Apply</a>
+  </nav>
+
+  <h1 style="text-align:center; padding-top:20px;">Games</h1>
+  <div class="game-grid" id="gameGrid"></div>
+  <iframe id="gameFrame"></iframe>
+
+  <script>
+    const games = [
+      {
+        title: "Basket Hoop",
+        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
+      },
+      {
+        title: "Drift Hunters Pro",
+        embed: "https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html",
+        image: "https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"
+      },
+      {
+        title: "Five Nights at Poppy",
+        embed: "https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg"
+      },
+      {
+        title: "Stickman GTA City",
+        embed: "https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg"
+      },
+      {
+        title: "Stickman Destruction",
+        embed: "https://www.onlinegames.io/games/2021/unity3/stickman-destruction/index.html",
+        image: "https://www.onlinegames.io/media/posts/233/responsive/Stickman-Destruction-xs.jpg"
+      },
+      {
+        title: "Capybara Clicker Pro",
+        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
+        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
+      }
+      // You can continue adding more game objects here.
+    ];
+
+    const grid = document.getElementById("gameGrid");
+    const frame = document.getElementById("gameFrame");
+
+    games.forEach(game => {
+      const card = document.createElement("div");
+      card.className = "game-card";
+      card.innerHTML = `
+        <img src="${game.image}" alt="${game.title}">
+        <h4>${game.title}</h4>
+        <button>Play</button>
+      `;
+      card.querySelector("button").onclick = () => {
+        frame.src = game.embed;
+        frame.scrollIntoView({behavior: "smooth"});
+      };
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
