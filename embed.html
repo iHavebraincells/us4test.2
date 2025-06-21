@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="/static/uv/uv.bundle.js" defer></script>
-  <script src="/static/uv/uv.config.js" defer></script>
-</head>
-<body>
+  <meta charset="UTF-8" />
+  <title>bashW - Embed</title>
+  <script src="static/uv/uv.bundle.js" defer></script>
+  <script src="static/uv/uv.config.js" defer></script>
+  <script src="register-sw.js" defer></script>
   <script>
-    const url = new URLSearchParams(window.location.search).get('p');
-    if (!url) window.location.href = '/';
-    const iframe = document.createElement('iframe');
-    iframe.src = __uv$config.prefix + __uv$config.encodeUrl(url);
-    iframe.style = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none';
-    document.body.appendChild(iframe);
+    window.addEventListener('DOMContentLoaded', async () => {
+      const encodedUrl = new URLSearchParams(window.location.search).get('url');
+      if (!encodedUrl) return document.body.innerHTML = '<h1>No URL provided.</h1>';
+      const decoded = decodeURIComponent(encodedUrl);
+      const u = await new UVServiceWorker().setup();
+      location.href = __uv$config.prefix + __uv$config.encodeUrl(decoded);
+    });
   </script>
+</head>
+<body style="background: black; color: white; font-family: sans-serif;">
+  <h1>Loading via UV...</h1>
 </body>
 </html>
