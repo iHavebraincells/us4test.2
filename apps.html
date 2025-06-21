@@ -2,90 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bashW - Apps</title>
+  <title>bashW – Apps</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    nav {
-      background: #111;
-      padding: 10px;
-    }
-    nav a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-    .app-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-    }
-    .app-card {
-      background: #222;
-      border-radius: 10px;
-      padding: 10px;
-      width: 250px;
-    }
-    .app-card img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .app-card button {
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+    body,nav { margin:0; padding:0; }
+    body { background:black; color:white; font-family:Arial,sans-serif; text-align:center; overflow-x:hidden; }
+    nav { background:#111; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; }
+    nav a { color:white; margin:5px 10px; text-decoration:none; padding:5px 10px; border:1px solid transparent; border-radius:5px; }
+    nav a:hover { border-color:white; }
+    h1 { margin:20px 0; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:0 20px 20px; }
+    .card { background:#222; border-radius:8px; overflow:hidden; }
+    .card img { width:100%; }
+    .card button { width:100%; padding:10px; background:#444; border:none; color:white; cursor:pointer; }
   </style>
 </head>
 <body>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="games.html">Games</a>
-    <a href="apps.html">Apps</a>
-    <a href="proxy.html">Proxy</a>
-    <a href="apply.html">Apply</a>
-    <a href="credits.html">Credits</a>
+    <a href="index.html">Home</a><a href="games.html">Games</a><a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a><a href="apply.html">Apply</a><a href="credits.html">Credits</a><a href="log.html">Update Log</a>
   </nav>
-
   <h1>Apps</h1>
-  <div class="app-grid">
-    <div class="app-card">
-      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
-      <button onclick="openApp('https://www.google.com')">Open Google</button>
-    </div>
-    <div class="app-card">
-      <img src="https://www.youtube.com/s/desktop/f6e232f1/img/favicon_144x144.png" alt="YouTube">
-      <button onclick="openApp('https://www.youtube.com')">Open YouTube</button>
-    </div>
-    <div class="app-card">
-      <img src="https://spotify.com/favicon.ico" alt="Spotify">
-      <button onclick="openApp('https://open.spotify.com')">Open Spotify</button>
-    </div>
-    <div class="app-card">
-      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
-      <button onclick="openApp('https://github.com')">Open GitHub</button>
-    </div>
-    <div class="app-card">
-      <img src="https://styles.redditmedia.com/t5_2qh33/styles/communityIcon_t7fozwx1l0pa1.png" alt="Discord">
-      <button onclick="alert('Discord cannot be embedded.');">Discord Not Embeddable</button>
-    </div>
-  </div>
+  <div class="grid" id="appGrid"></div>
 
   <script>
-    function openApp(url) {
-      window.location.href = `embed.html?url=${encodeURIComponent(url)}`;
-    }
+    const apps = [
+      { title:'Google', img:'https://www.google.com/favicon.ico', url:'https://www.google.com' },
+      { title:'YouTube', img:'https://www.youtube.com/favicon.ico', url:'https://www.youtube.com' },
+      { title:'Spotify', img:'https://open.spotify.com/favicon.ico', url:'https://open.spotify.com' },
+      { title:'GitHub', img:'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png', url:'https://github.com' },
+      { title:'Discord', img:'https://discord.com/assets/favicon.png', url:null }
+    ];
+    const aEl = document.getElementById('appGrid');
+    apps.forEach(a => {
+      const c = document.createElement('div'); c.className='card';
+      c.innerHTML = `<img src="${a.img}" alt=""><button>${a.title}</button>`;
+      c.querySelector('button').onclick = () => {
+        if (!a.url) return alert(a.title + ' cannot be embedded');
+        window.location = `embed.html?url=${encodeURIComponent(a.url)}`;
+      };
+      aEl.appendChild(c);
+    });
   </script>
 </body>
 </html>
