@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>bashW - Proxy</title>
   <style>
     body {
@@ -11,24 +11,38 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
+
     nav {
       background: #111;
       padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
+
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
     }
-    #uv-frame {
+
+    iframe {
       width: 100%;
-      height: 600px;
+      height: calc(100vh - 50px);
       border: none;
-      margin-top: 20px;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: 0;
+      background: white;
+      border-radius: 50%;
+      width: 5px;
+      height: 5px;
+      animation: fall linear infinite;
+      z-index: 9999;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
@@ -40,78 +54,37 @@
     <a href="proxy.html">Proxy</a>
     <a href="apply.html">Apply</a>
     <a href="credits.html">Credits</a>
-    <a href="log.html">Update Log</a>
   </nav>
 
-  <h1>Proxy</h1>
-  <p>Use the search bar below to browse the internet through our built-in proxy.</p>
+  <iframe src="embed.html?url=https%3A%2F%2Fwww.google.com%2Fsearch%3Figu%3D1"></iframe>
 
-  <form id="uv-form">
-    <input id="uv-search" type="text" placeholder="Search or URL" style="padding: 10px; width: 60%; max-width: 500px;">
-    <button type="submit" style="padding: 10px;">Go</button>
-  </form>
-
-  <iframe id="uv-frame" src="embed.html?url=https://www.google.com/search?igu=1"></iframe>
-
-  <script>
-    const form = document.getElementById('uv-form');
-    const input = document.getElementById('uv-search');
-    const frame = document.getElementById('uv-frame');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const query = input.value.trim();
-      const url = query.startsWith('http') ? query : 'https://www.google.com/search?q=' + encodeURIComponent(query);
-      frame.src = 'embed.html?url=' + encodeURIComponent(url);
-    });
-  </script>
-
-  <!-- Optional Snowflakes -->
   <script>
     function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.textContent = '❄';
-      snowflake.style.position = 'fixed';
-      snowflake.style.left = Math.random() * 100 + 'vw';
-      snowflake.style.top = '-2em';
-      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
       snowflake.style.opacity = Math.random();
-      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 10000);
+      setTimeout(() => snowflake.remove(), 5000);
     }
-
-    setInterval(createSnowflake, 200);
-
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes fall {
-        to {
-          transform: translateY(100vh);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
+    setInterval(createSnowflake, 100);
   </script>
 
-  <!-- GoGuardian Detection -->
   <script>
-    const goGuardianExtensions = [
+    const goGuardianIDs = [
       "haldlgldplgnggkjaafhelgiaglafanh",
       "kmffehbidlalibfeklaefnckpidbodff",
       "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
-
-    goGuardianExtensions.forEach(id => {
+    goGuardianIDs.forEach(id => {
       const img = new Image();
-      img.src = `chrome-extension://${id}/icons/icon128.png`;
+      img.src = "chrome-extension://" + id + "/icons/icon128.png";
       img.onload = () => {
-        const w = window.open("goguardian.html", "_blank");
-        if (w) w.blur();
+        const tab = window.open("goguardian.html", "_blank");
+        if (tab) tab.blur();
       };
     });
   </script>
 </body>
 </html>
-
