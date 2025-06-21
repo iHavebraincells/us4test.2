@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>bashW - Apply</title>
+  <meta charset="UTF-8">
+  <title>Apply to bashW</title>
   <style>
     body {
       margin: 0;
@@ -14,40 +14,42 @@
     nav {
       background: #111;
       padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
     }
     form {
-      margin: 40px auto;
-      max-width: 500px;
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    input, textarea, button {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      font-family: Arial, sans-serif;
+      margin-top: 40px;
     }
     input, textarea {
-      background: #333;
-      color: white;
+      padding: 10px;
+      margin: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
     }
     button {
+      padding: 10px 20px;
       background: #444;
       color: white;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
+    }
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -63,51 +65,32 @@
   </nav>
 
   <h1>Apply to Join bashW</h1>
-
   <form action="https://formspree.io/f/xkgbvvzq" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <textarea name="why" placeholder="Why should we accept you?" rows="5" required></textarea>
+    <input type="text" name="name" placeholder="Your Name" required><br>
+    <input type="email" name="_replyto" placeholder="Your Email" required><br>
+    <textarea name="message" placeholder="Why do you want to join bashW?" required></textarea><br>
     <button type="submit">Submit Application</button>
   </form>
 
-  <!-- Optional Snow -->
   <script>
+    // Snow
     function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.textContent = '❄';
-      snowflake.style.position = 'fixed';
-      snowflake.style.left = Math.random() * 100 + 'vw';
-      snowflake.style.top = '-2em';
-      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
-      snowflake.style.opacity = Math.random();
-      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.textContent = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = 2 + Math.random() * 3 + "s";
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 10000);
+      setTimeout(() => snowflake.remove(), 5000);
     }
+    setInterval(createSnowflake, 100);
 
-    setInterval(createSnowflake, 200);
-
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes fall {
-        to {
-          transform: translateY(100vh);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
-
-  <!-- GoGuardian Detection -->
-  <script>
+    // GoGuardian Detection
     const goGuardianExtensions = [
       "haldlgldplgnggkjaafhelgiaglafanh",
       "kmffehbidlalibfeklaefnckpidbodff",
       "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
-
     goGuardianExtensions.forEach(id => {
       const img = new Image();
       img.src = `chrome-extension://${id}/icons/icon128.png`;
