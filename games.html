@@ -2,133 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bashW - Games</title>
+  <title>bashW – Games</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-    }
-    nav {
-      background: #111;
-      padding: 10px;
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .game-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      padding: 20px;
-    }
-    .game-card {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 8px;
-      width: 200px;
-      padding: 10px;
-      text-align: center;
-    }
-    .game-card img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .game-card button {
-      margin-top: 8px;
-      padding: 8px;
-      background: #222;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-    }
-    #gameFrame {
-      width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 20px;
-    }
+    body,nav { margin:0; padding:0; }
+    body { background:black; color:white; font-family:Arial,sans-serif; text-align:center; overflow-x:hidden; }
+    nav { background:#111; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; }
+    nav a { color:white; margin:5px 10px; text-decoration:none; padding:5px 10px; border:1px solid transparent; border-radius:5px; }
+    nav a:hover { border-color:white; }
+    h1 { margin:20px 0; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:0 20px 20px; }
+    .card { background:#222; border-radius:8px; overflow:hidden; }
+    .card img { width:100%; }
+    .card button { width:100%; padding:10px; background:#444; border:none; color:white; cursor:pointer; }
+    .snowflake { position:fixed; top:-5%; color:white; user-select:none; pointer-events:none; animation:fall linear infinite; }
+    @keyframes fall { to { transform:translateY(110vh); opacity:0; } }
   </style>
 </head>
 <body>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="games.html">Games</a>
-    <a href="apps.html">Apps</a>
-    <a href="proxy.html">Proxy</a>
-    <a href="credits.html">Credits</a>
-    <a href="log.html">Updates</a>
-    <a href="apply.html">Apply</a>
+    <a href="index.html">Home</a><a href="games.html">Games</a><a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a><a href="apply.html">Apply</a><a href="credits.html">Credits</a><a href="log.html">Update Log</a>
   </nav>
-
-  <h1 style="text-align:center; padding-top:20px;">Games</h1>
-  <div class="game-grid" id="gameGrid"></div>
-  <iframe id="gameFrame"></iframe>
+  <h1>Games</h1>
+  <div class="grid" id="gameGrid"></div>
 
   <script>
-    const games = [
-      {
-        title: "Basket Hoop",
-        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
-      },
-      {
-        title: "Drift Hunters Pro",
-        embed: "https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html",
-        image: "https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"
-      },
-      {
-        title: "Five Nights at Poppy",
-        embed: "https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg"
-      },
-      {
-        title: "Stickman GTA City",
-        embed: "https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html",
-        image: "https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg"
-      },
-      {
-        title: "Stickman Destruction",
-        embed: "https://www.onlinegames.io/games/2021/unity3/stickman-destruction/index.html",
-        image: "https://www.onlinegames.io/media/posts/233/responsive/Stickman-Destruction-xs.jpg"
-      },
-      {
-        title: "Capybara Clicker Pro",
-        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
-        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
-      }
-      // You can continue adding more game objects here.
-    ];
-
-    const grid = document.getElementById("gameGrid");
-    const frame = document.getElementById("gameFrame");
-
-    games.forEach(game => {
-      const card = document.createElement("div");
-      card.className = "game-card";
-      card.innerHTML = `
-        <img src="${game.image}" alt="${game.title}">
-        <h4>${game.title}</h4>
-        <button>Play</button>
-      `;
-      card.querySelector("button").onclick = () => {
-        frame.src = game.embed;
-        frame.scrollIntoView({behavior: "smooth"});
+    const games = [ /* all your game objects here */ ];
+    const gEl = document.getElementById('gameGrid');
+    games.forEach(g => {
+      const c = document.createElement('div'); c.className = 'card';
+      c.innerHTML = `<img src="${g.image}" alt=""><button>${g.title}</button>`;
+      c.querySelector('button').onclick = () => {
+        window.location = `embed.html?url=${encodeURIComponent(g.embed)}`;
       };
-      grid.appendChild(card);
+      gEl.appendChild(c);
     });
+
+    function createSnow(){ const s=document.createElement('div'); s.className='snowflake'; s.textContent='❄'; s.style.left= Math.random()*100+'vw'; s.style.fontSize=(10+Math.random()*20)+'px'; s.style.animationDuration=(3+Math.random()*4)+'s'; document.body.appendChild(s); setTimeout(()=>s.remove(),8000);}
+    setInterval(createSnow,150);
   </script>
 </body>
 </html>
