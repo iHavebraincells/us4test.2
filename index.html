@@ -1,211 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>bashW - All-in-One</title>
+  <meta charset="UTF-8" />
+  <title>bashW</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="static/uv/uv.bundle.js" defer></script>
-  <script src="static/uv/uv.config.js" defer></script>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background:black;
-      color:white;
-      font-family:sans-serif;
-      overflow-x:hidden;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
     }
+
     nav {
-      background:#111;
-      padding:10px;
-      display:flex;
-      justify-content:center;
-      gap:8px;
-      position:sticky;
-      top:0;
-      z-index:10;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: #111;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
+
     nav button {
-      background:#222;
-      color:#fff;
-      border:none;
-      padding:8px 15px;
-      cursor:pointer;
-      border-radius:4px;
+      background: #222;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .tab {
-      display:none;
-      padding:20px;
-      min-height:calc(100vh - 60px);
-      text-align:center;
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      text-align: center;
     }
-    .active { display:block; }
-    .grid {
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-      justify-content:center;
+
+    .tab-content.active {
+      display: block;
     }
+
+    .game-grid, .app-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
     .card {
-      background:#222;
-      border:1px solid #444;
-      border-radius:8px;
-      width:200px;
-      padding:10px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 10px;
+      width: 220px;
+      padding: 10px;
     }
+
     .card img {
-      width:100%;
-      border-radius:4px;
+      width: 100%;
+      border-radius: 5px;
     }
+
     .card button {
-      margin-top:8px;
-      padding:6px 10px;
-      background:#333;
-      border:none;
-      border-radius:4px;
-      color:#fff;
-      cursor:pointer;
+      margin-top: 10px;
+      padding: 8px;
+      background: #444;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    iframe.uv {
-      width:100%;
-      height:600px;
-      border:none;
+
+    iframe {
+      width: 90%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
     }
-    @keyframes fall {
-      0% { transform:translateY(0); opacity:1; }
-      100% { transform:translateY(100vh); opacity:0; }
-    }
+
+    /* SNOW */
     .snowflake {
-      position:absolute;
-      top:-20px;
-      color:#fff;
-      animation:fall linear infinite;
-      user-select:none;
-      pointer-events:none;
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      animation: fall linear infinite;
+      z-index: 999;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav>
-  <button onclick="show('home')">Home</button>
-  <button onclick="show('games')">Games</button>
-  <button onclick="show('apps')">Apps</button>
-  <button onclick="show('proxy')">Proxy</button>
-  <button onclick="show('credits')">Credits</button>
-  <button onclick="show('settings')">Settings</button>
-  <button onclick="show('log')">Update Log</button>
-  <button onclick="show('apply')">Application</button>
+  <button onclick="showTab('home')">Home</button>
+  <button onclick="showTab('games')">Games</button>
+  <button onclick="showTab('apps')">Apps</button>
+  <button onclick="showTab('proxy')">Proxy</button>
+  <button onclick="showTab('credits')">Credits</button>
+  <button onclick="showTab('apply')">Apply</button>
 </nav>
 
-<div id="home" class="tab active">
+<!-- Tabs -->
+<div id="home" class="tab-content active">
   <h1>Welcome to bashW</h1>
   <p>Unblock the web with style.</p>
 </div>
 
-<div id="games" class="tab">
-  <h1>Games</h1>
-  <div id="gameGrid" class="grid"></div>
-  <div id="gameFrame" style="margin-top:20px;"></div>
+<div id="games" class="tab-content">
+  <h2>Games</h2>
+  <div class="game-grid" id="gameGrid"></div>
+  <div id="gameFrame"></div>
 </div>
 
-<div id="apps" class="tab">
-  <h1>Apps</h1>
-  <div id="appGrid" class="grid"></div>
-  <div id="appFrame" style="margin-top:20px;"></div>
+<div id="apps" class="tab-content">
+  <h2>Apps</h2>
+  <div class="app-grid" id="appGrid"></div>
+  <div id="appFrame"></div>
 </div>
 
-<div id="proxy" class="tab">
-  <h1>Proxy Browser</h1>
-  <iframe id="uvFrame" class="uv"></iframe>
+<div id="proxy" class="tab-content">
+  <h2>Proxy</h2>
+  <iframe src="https://www.google.com/webhp?igu=1"></iframe>
 </div>
 
-<div id="credits" class="tab">
-  <h1>Credits</h1>
-  <p>Credits to the US4 team and bash working on bashW.</p>
+<div id="credits" class="tab-content">
+  <h2>Credits</h2>
+  <p>bashW created by US4 and bash team. UV proxy + games included.</p>
 </div>
 
-<div id="settings" class="tab">
-  <h1>Settings</h1>
-  <p>Snow background enabled. More coming soon!</p>
-</div>
-
-<div id="log" class="tab">
-  <h1>Update Log</h1>
-  <ul>
-    <li>✅ Full game list added</li>
-    <li>✅ App proxies working in-page</li>
-    <li>✅ UV-powered browser with Google</li>
-    <li>✅ Snow animation tidy and centered</li>
-  </ul>
-</div>
-
-<div id="apply" class="tab">
-  <h1>Apply to bashW</h1>
+<div id="apply" class="tab-content">
+  <h2>Apply to Join bashW</h2>
   <form action="https://formspree.io/f/xkgbvvzq" method="POST">
-    <input name="name" type="text" placeholder="Name" required><br><br>
-    <input name="email" type="email" placeholder="Email" required><br><br>
-    <textarea name="message" placeholder="Why join?" required></textarea><br><br>
+    <input type="text" name="name" placeholder="Name" required><br><br>
+    <input type="email" name="email" placeholder="Email" required><br><br>
+    <textarea name="message" placeholder="Why do you want to join?" required></textarea><br><br>
     <button type="submit">Submit</button>
   </form>
 </div>
 
+<!-- Scripts -->
 <script>
-  function show(id) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tab-content');
+  function showTab(id) {
+    tabs.forEach(tab => tab.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    if (id === 'proxy') {
-      document.getElementById('uvFrame').src = 'https://www.google.com/webhp?igu=1';
-    } else {
-      document.getElementById('uvFrame').src = '';
-    }
     document.getElementById('gameFrame').innerHTML = '';
     document.getElementById('appFrame').innerHTML = '';
   }
 
-  // Snowflakes
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement('div');
-    s.className = 'snowflake';
-    s.textContent = '❄';
-    s.style.left = `${Math.random() * 100}vw`;
-    s.style.fontSize = `${10 + Math.random() * 10}px`;
-    s.style.animationDuration = `${3 + Math.random() * 3}s`;
-    document.body.append(s);
-  }
-
   const games = [
-    {title:"Drift Hunters Pro", embed:"https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html", image:"https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"},
-    {title:"Five Nights at Poppy", embed:"https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html", image:"https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg"},
-    {title:"Stickman GTA City", embed:"https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html", image:"https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg"},
-    {title:"Basket Hoop", embed:"https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html", image:"https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"}
-   {title:"Head Soccer 2022","embed": "https://www.onlinegames.io/games/2023/construct/280/head-soccer-2022/index.html","image": "https://www.onlinegames.io/media/posts/624/responsive/Head-Soccer-2022-xs.jpg"} 
+    {
+      title: "Drift Hunters Pro",
+      embed: "https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html",
+      image: "https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"
+    },
+    {
+      title: "Basket Hoop",
+      embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
+      image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
+    }
   ];
-  [
-  const gameGrid = document.getElementById('gameGrid');
-  games.forEach(g => {
-    const c = document.createElement('div');
-    c.className = 'card';
-    c.innerHTML = `<img src="${g.image}" alt="${g.title}"><h3>${g.title}</h3><button onclick="play('${g.embed}')">Play</button>`;
-    gameGrid.appendChild(c);
-  });
-  function play(url){
-    document.getElementById('gameFrame').innerHTML = `<iframe class="uv" src="${url}"></iframe>`;
-  }
 
   const apps = [
-    {title:"Google", embed:"https://www.google.com/webhp?igu=1", image:"https://www.google.com/favicon.ico"},
-    {title:"Discord", embed:"https://discord.com/app", image:"https://discord.com/favicon.ico"},
-    {title:"GitHub", embed:"https://github.com", image:"https://github.com/favicon.ico"}
+    {
+      title: "Google",
+      embed: "https://www.google.com/webhp?igu=1",
+      image: "https://www.google.com/favicon.ico"
+    },
+    {
+      title: "Discord",
+      embed: "https://discord.com/app",
+      image: "https://discord.com/favicon.ico"
+    },
+    {
+      title: "GitHub",
+      embed: "https://github.com",
+      image: "https://github.com/favicon.ico"
+    }
   ];
-  const appGrid = document.getElementById('appGrid');
-  apps.forEach(a => {
-    const c = document.createElement('div');
-    c.className = 'card';
-    c.innerHTML = `<img src="${a.image}" alt="${a.title}"><h3>${a.title}</h3><button onclick="launch('${a.embed}')">Open</button>`;
-    appGrid.appendChild(c);
+
+  games.forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<img src="${g.image}" alt="${g.title}">
+      <h3>${g.title}</h3>
+      <button onclick="launchGame('${g.embed}')">Play</button>`;
+    document.getElementById('gameGrid').appendChild(div);
   });
-  function launch(url){
-    document.getElementById('appFrame').innerHTML = `<iframe class="uv" src="${url}"></iframe>`;
+
+  apps.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<img src="${a.image}" alt="${a.title}">
+      <h3>${a.title}</h3>
+      <button onclick="launchApp('${a.embed}')">Launch</button>`;
+    document.getElementById('appGrid').appendChild(div);
+  });
+
+  function launchGame(url) {
+    document.getElementById('gameFrame').innerHTML = `<iframe src="${url}"></iframe>`;
+  }
+
+  function launchApp(url) {
+    document.getElementById('appFrame').innerHTML = `<iframe src="${url}"></iframe>`;
+  }
+
+  // Snow
+  for (let i = 0; i < 40; i++) {
+    const flake = document.createElement('div');
+    flake.className = 'snowflake';
+    flake.textContent = '❄';
+    flake.style.left = `${Math.random() * 100}vw`;
+    flake.style.fontSize = `${10 + Math.random() * 20}px`;
+    flake.style.animationDuration = `${5 + Math.random() * 5}s`;
+    flake.style.animationDelay = `${Math.random() * 5}s`;
+    document.body.appendChild(flake);
   }
 </script>
 
