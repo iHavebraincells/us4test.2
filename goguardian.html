@@ -5,45 +5,35 @@
   <title>GoGuardian Detected</title>
   <style>
     body {
-      margin: 0;
       background: black;
       color: white;
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
       text-align: center;
-      padding-top: 40px;
     }
-    .snowflake {
-      position: fixed;
-      top: -5%;
+    textarea {
+      background: #111;
       color: white;
-      user-select: none;
-      pointer-events: none;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+      border: 1px solid #333;
+      padding: 10px;
+      border-radius: 5px;
+      width: 90%;
+      max-width: 600px;
+      height: 300px;
+      font-family: monospace;
+      resize: vertical;
     }
   </style>
 </head>
 <body>
-  <h1>GoGuardian Detected</h1>
-  <p>Custom response goes here...</p>
-
-  <script>
-    function createSnow() {
-      const s = document.createElement('div');
-      s.className = 'snowflake';
-      s.textContent = '❄';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (10 + Math.random() * 20) + 'px';
-      s.style.animationDuration = (3 + Math.random() * 4) + 's';
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 8000);
-    }
-    setInterval(createSnow, 150);
-  </script>
+  <h1>🔒 GoGuardian Detected</h1>
+  <p>You’re seeing this hidden tab because GoGuardian or a similar extension was found.</p>
+  <p>You can enter a custom note or explanation below:</p>
+  <textarea placeholder="Type your message here..."></textarea>
 </body>
 </html>
