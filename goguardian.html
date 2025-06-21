@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GoGuardian Detected</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5em;
+    }
+
+    textarea {
+      width: 80%;
+      max-width: 700px;
+      height: 300px;
+      background: #111;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 1em;
+      margin-top: 20px;
+      resize: vertical;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>GoGuardian Detected</h1>
+  <p>You can edit this message below:</p>
+  <textarea placeholder="Insert your custom message or warning here..."></textarea>
+
+  <script>
+    // Snow effect
+    setInterval(() => {
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.innerText = "❄";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }, 150);
+  </script>
+</body>
+</html>
