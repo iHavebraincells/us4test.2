@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <title>bashW - Embed</title>
-  <script src="static/uv/uv.bundle.js" defer></script>
-  <script src="static/uv/uv.config.js" defer></script>
-  <script src="register-sw.js" defer></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', async () => {
-      const encodedUrl = new URLSearchParams(window.location.search).get('url');
-      if (!encodedUrl) return document.body.innerHTML = '<h1>No URL provided.</h1>';
-      const decoded = decodeURIComponent(encodedUrl);
-      const u = await new UVServiceWorker().setup();
-      location.href = __uv$config.prefix + __uv$config.encodeUrl(decoded);
-    });
-  </script>
-</head>
-<body style="background: black; color: white; font-family: sans-serif;">
-  <h1>Loading via UV...</h1>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>bashW — Loading...</title>
+<script src="static/uv/uv.bundle.js" defer></script>
+<script src="static/uv/uv.config.js" defer></script>
+<script src="register-sw.js" defer></script>
+<script>
+  window.onload = async () => {
+    const p = new URLSearchParams(location.search).get('url');
+    if (!p) { document.body.innerHTML = '<h1>Missing URL</h1>'; return; }
+    const decoded = decodeURIComponent(p);
+    const uv = new UVServiceWorker();
+    await uv.setup();
+    location.replace(__uv$config.prefix + __uv$config.encodeUrl(decoded));
+  };
+</script>
+</head><body style="background:black;color:white;font-family:Arial,sans-serif;text-align:center;">
+  <h1>Loading...</h1>
+</body></html>
