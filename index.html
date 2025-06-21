@@ -2,161 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bashW • US4-style Site</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <!-- UV Proxy scripts -->
-  <script src="static/uv/uv.bundle.js" defer></script>
-  <script src="static/uv/uv.config.js" defer></script>
+  <title>bashW - Home</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body, html { height:100%; background:#000; color:#fff; font-family:'Comfortaa',sans-serif; }
-    nav { position:fixed; top:0; width:100%; background:rgba(0,0,0,0.8); display:flex; justify-content:center; z-index:10; }
-    nav button { background:transparent; border:none; color:#fff; padding:12px 18px; font-size:16px; cursor:pointer; border-radius:6px; }
-    nav button.active, nav button:hover { background:rgba(255,255,255,0.2); }
-    .tab { display:none; padding:100px 20px 20px; text-align:center; min-height:100%; }
-    .tab.active { display:block; }
-    .grid { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:20px; }
-    .card { width:180px; background:#111; border:1px solid #222; border-radius:8px; padding:10px; text-align:center; }
-    .card img { width:100%; border-radius:5px; }
-    .card button { margin-top:8px; padding:8px; background:#222; border:none; border-radius:4px; color:#fff; cursor:pointer; }
-    iframe { width:90%; height:600px; border:none; margin-top:20px; }
-    .snowflake { position:fixed; top:-20px; color:#fff; opacity:0.8; font-size:1rem; pointer-events:none; user-select:none; animation:fall linear infinite; z-index:5; }
-    @keyframes fall { 0% { transform:translateY(0); } 100% { transform:translateY(100vh); } }
-    form input, form textarea { width:80%; padding:8px; margin:4px 0; border-radius:4px; border:none; }
-    form button { padding:10px 20px; border:none; border-radius:6px; background:#222; color:#fff; cursor:pointer; margin-top:8px; }
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      text-align: center;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 30vh;
+    }
+
+    /* Snow */
+    .snowflake {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      color: white;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
-<nav>
-  <button onclick="selectTab('home', this)" class="active">Home</button>
-  <button onclick="selectTab('games', this)">Games</button>
-  <button onclick="selectTab('apps', this)">Apps</button>
-  <button onclick="selectTab('proxy', this)">Proxy</button>
-  <button onclick="selectTab('credits', this)">Credits</button>
-  <button onclick="selectTab('apply', this)">Apply</button>
-  <button onclick="selectTab('settings', this)">Settings</button>
-  <button onclick="selectTab('log', this)">Update Log</button>
-</nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="credits.html">Credits</a>
+    <a href="log.html">Updates</a>
+    <a href="apply.html">Apply</a>
+  </nav>
 
-<div id="home" class="tab active">
-  <h1 style="font-size:3em;">Welcome to bashW</h1>
-  <p style="font-size:1.2em;">Unblock the web with style.</p>
-</div>
+  <h1>Welcome to bashW</h1>
+  <p>Unblock the web with style.</p>
 
-<div id="games" class="tab">
-  <h1>Games</h1>
-  <div id="gameGrid" class="grid"></div>
-  <div id="gameFrame"></div>
-</div>
-
-<div id="apps" class="tab">
-  <h1>Apps</h1>
-  <div id="appGrid" class="grid"></div>
-  <div id="appFrame"></div>
-</div>
-
-<div id="proxy" class="tab">
-  <h1>Proxy Browser</h1>
-  <iframe id="uvIframe"></iframe>
-</div>
-
-<div id="credits" class="tab">
-  <h1>Credits</h1>
-  <p>Thanks to the US4 team & bash for making this possible.</p>
-</div>
-
-<div id="apply" class="tab">
-  <h1>Apply to Join bashW</h1>
-  <form action="https://formspree.io/f/xkgbvvzq" method="POST">
-    <input name="name" type="text" placeholder="Name" required>
-    <input name="email" type="email" placeholder="Email" required>
-    <textarea name="message" rows="4" placeholder="Why do you want to join?" required></textarea>
-    <button type="submit">Submit</button>
-  </form>
-</div>
-
-<div id="settings" class="tab">
-  <h1>Settings</h1>
-  <p>Snow background enabled. More coming soon!</p>
-</div>
-
-<div id="log" class="tab">
-  <h1>Update Log</h1>
-  <ul>
-    <li>Homescreen + snow</li>
-    <li>Games embedded</li>
-    <li>Working Apps via proxy</li>
-    <li>Proxy tab</li>
-    <li>Apply form</li>
-  </ul>
-</div>
-
-<script>
-  const tabs = document.querySelectorAll('.tab');
-  function selectTab(id, el) {
-    tabs.forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    // Reset frames
-    document.getElementById('gameFrame').innerHTML = '';
-    document.getElementById('appFrame').innerHTML = '';
-    if (id === 'proxy') {
-      document.getElementById('uvIframe').src = __uv$config.prefix + __uv$config.encodeUrl('https://www.google.com/webhp?igu=1');
+  <!-- Snow Script -->
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.innerHTML = "❄";
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      snowflake.style.animationDuration = Math.random() * 5 + 5 + "s";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
     }
-  }
+    setInterval(createSnowflake, 100);
+  </script>
 
-  // Snowfall
-  for (let i = 0; i < 40; i++) {
-    const f = document.createElement('div');
-    f.className = 'snowflake';
-    f.textContent = '❄';
-    f.style.left = Math.random() * 100 + 'vw';
-    f.style.fontSize = Math.random() * 20 + 10 + 'px';
-    f.style.animationDuration = Math.random() * 5 + 5 + 's';
-    f.style.animationDelay = Math.random() * 5 + 's';
-    document.body.appendChild(f);
-  }
+  <!-- GoGuardian Detection -->
+  <script>
+    const extensionIds = [
+      "haldlgldplgnggkjaafhelgiaglafanh", // GoGuardian
+      "jamhcnnkihinmdlkakkaopbjbbcngflc", // GoGuardian
+      "hmendjhbbdimpjlhegagdgdnfkjmhgfk"  // GoGuardian
+    ];
 
-  // Games list
-  const games = [
-    {title:"Drift Hunters Pro", embed:"https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html", image:"https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"},
-    {title:"Five Nights at Poppy", embed:"https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html", image:"https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg"},
-    {title:"Stickman GTA City", embed:"https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html", image:"https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg"},
-    {title:"Basket Hoop", embed:"https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html", image:"https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"}
-    // Add more games as needed
-  ];
-  const gameGrid = document.getElementById('gameGrid');
-  games.forEach(g => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<img src="${g.image}"><h4>${g.title}</h4><button onclick="launchGame('${g.embed}')">Play</button>`;
-    gameGrid.appendChild(card);
-  });
-  function launchGame(url) {
-    selectTab('games', document.querySelector("nav button:nth-child(2)"));
-    document.getElementById('gameFrame').innerHTML = `<iframe src="${url}"></iframe>`;
-  }
-
-  // Apps list
-  const apps = [
-    {title:"Google", embed:"https://www.google.com/webhp?igu=1", image:"https://www.google.com/favicon.ico"},
-    {title:"Discord", embed:"https://discord.com/app", image:"https://discord.com/favicon.ico"},
-    {title:"GitHub", embed:"https://github.com", image:"https://github.com/favicon.ico"}
-  ];
-  const appGrid = document.getElementById('appGrid');
-  apps.forEach(a => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<img src="${a.image}"><h4>${a.title}</h4><button onclick="launchApp('${a.embed}')">Open</button>`;
-    appGrid.appendChild(card);
-  });
-  function launchApp(url) {
-    selectTab('apps', document.querySelector("nav button:nth-child(3)"));
-    document.getElementById('appFrame').innerHTML = `<iframe src="${__uv$config.prefix + __uv$config.encodeUrl(url)}"></iframe>`;
-  }
-</script>
+    extensionIds.forEach((id) => {
+      const img = new Image();
+      img.src = "chrome-extension://" + id + "/icons/icon128.png";
+      img.onload = () => {
+        const tab = window.open("goguardian.html", "_blank");
+        if (tab) tab.blur(); // open silently
+      };
+    });
+  </script>
 
 </body>
 </html>
