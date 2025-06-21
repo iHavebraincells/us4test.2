@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>bashW - Proxy</title>
   <style>
     body {
       margin: 0;
+      font-family: Arial, sans-serif;
       background: black;
       color: white;
-      font-family: Arial, sans-serif;
       text-align: center;
+      overflow: hidden;
     }
-
     nav {
       background: #111;
       padding: 10px;
     }
-
     nav a {
       color: white;
       margin: 0 10px;
       text-decoration: none;
     }
-
+    #uv-address {
+      width: 60%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+    #uv-go {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      background: #444;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
     iframe {
       width: 100%;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 120px);
       border: none;
+      margin-top: 10px;
     }
-
     .snowflake {
       position: fixed;
       top: 0;
@@ -39,7 +54,6 @@
       animation: fall linear infinite;
       z-index: 9999;
     }
-
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
@@ -56,35 +70,65 @@
     <a href="credits.html">Credits</a>
   </nav>
 
-  <iframe src="embed.html?url=https%3A%2F%2Fwww.google.com%2Fsearch%3Figu%3D1"></iframe>
+  <h1>bashW Proxy Browser</h1>
+  <input id="uv-address" placeholder="Search or enter a URL..." />
+  <button id="uv-go">Go</button>
+  <iframe id="uv-frame" allowfullscreen></iframe>
+
+  <!-- UV Scripts -->
+  <script src="static/uv/uv.bundle.js"></script>
+  <script src="static/uv/uv.config.js"></script>
+  <script src="register-sw.js"></script>
 
   <script>
-    function createSnowflake() {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      snowflake.style.opacity = Math.random();
-      document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
+    const input = document.getElementById('uv-address');
+    const go = document.getElementById('uv-go');
+    const frame = document.getElementById('uv-frame');
+    const prefix = __uv$config.prefix;
+
+    function makeSnowflake() {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      flake.style.left = Math.random() * window.innerWidth + 'px';
+      flake.style.animationDuration = (2 + Math.random() * 3) + 's';
+      flake.style.opacity = Math.random();
+      document.body.appendChild(flake);
+      setTimeout(() => flake.remove(), 5000);
     }
-    setInterval(createSnowflake, 100);
-  </script>
+    setInterval(makeSnowflake, 100);
 
-  <script>
-    const goGuardianIDs = [
-      "haldlgldplgnggkjaafhelgiaglafanh",
-      "kmffehbidlalibfeklaefnckpidbodff",
-      "bepbmhgboaologfdajaanbcjmnhjmhfn"
-    ];
-    goGuardianIDs.forEach(id => {
-      const img = new Image();
-      img.src = "chrome-extension://" + id + "/icons/icon128.png";
-      img.onload = () => {
-        const tab = window.open("goguardian.html", "_blank");
-        if (tab) tab.blur();
-      };
+    function loadURL(raw) {
+      let url = raw.trim();
+      if (!url) return;
+      if (!/^https?:\/\//i.test(url)) {
+        if (url.includes('.') && !url.includes(' ')) url = 'https://' + url;
+        else url = 'https://www.google.com/search?q=' + encodeURIComponent(url);
+      }
+      frame.src = prefix + __uv$config.encodeUrl(url);
+    }
+
+    go.onclick = () => loadURL(input.value);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") loadURL(input.value);
     });
+
+    // Auto-load if ?url= present
+    const preset = new URLSearchParams(location.search).get("url");
+    if (preset) {
+      input.value = decodeURIComponent(preset);
+      loadURL(input.value);
+    }
+
+    // GoGuardian detection
+    ['haldlgldplgnggkjaafhelgiaglafanh','kmffehbidlalibfeklaefnckpidbodff','bepbmhgboaologfdajaanbcjmnhjmhfn']
+      .forEach(id => {
+        const img = new Image();
+        img.src = `chrome-extension://${id}/icons/icon128.png`;
+        img.onload = () => {
+          const w = window.open("goguardian.html", "_blank");
+          if (w) w.blur();
+        };
+      });
   </script>
 </body>
 </html>
