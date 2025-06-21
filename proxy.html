@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bashW - Proxy</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    nav {
+      background: #111;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    h1 {
+      margin: 20px 0 10px;
+    }
+
+    input[type="text"] {
+      width: 60%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background: #444;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    iframe {
+      margin-top: 20px;
+      width: 95%;
+      height: 80vh;
+      border: none;
+      border-radius: 10px;
+    }
+
+    /* Snow */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+  </nav>
+
+  <h1>bashW Proxy</h1>
+  <p>Enter a search term or URL:</p>
+  <input type="text" id="proxySearch" placeholder="Search or URL...">
+  <button onclick="useProxy()">Go</button>
+
+  <iframe id="proxyFrame" src="https://www.google.com/search?igu=1"></iframe>
+
+  <script>
+    function useProxy() {
+      const input = document.getElementById("proxySearch").value.trim();
+      const frame = document.getElementById("proxyFrame");
+
+      if (input.startsWith("http://") || input.startsWith("https://")) {
+        frame.src = input;
+      } else if (input.includes(".")) {
+        frame.src = "https://" + input;
+      } else {
+        frame.src = "https://www.google.com/search?q=" + encodeURIComponent(input);
+      }
+    }
+
+    // Snow Generator
+    setInterval(() => {
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.innerText = "❄";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }, 150);
+  </script>
+</body>
+</html>
