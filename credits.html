@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bashW - Credits</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    nav {
+      background: #111;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+    }
+
+    .credit-list {
+      margin-top: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .credit-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .credit-list li {
+      margin-bottom: 10px;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+  </nav>
+
+  <h1>Credits</h1>
+  <div class="credit-list">
+    <ul>
+      <li><strong>bash:</strong> Site creator, builder & project lead</li>
+      <li><strong>US4 Project:</strong> Design inspiration and structure base</li>
+      <li><strong>Ultraviolet Proxy:</strong> Proxy engine backbone</li>
+      <li><strong>OnlineGames.io:</strong> Source for embeddable games</li>
+      <li><strong>Formspree:</strong> Form handling backend</li>
+      <li><strong>OpenAI ChatGPT:</strong> Helped write code & structure project</li>
+      <li><strong>Community Testers:</strong> Everyone who helped test in school networks</li>
+    </ul>
+  </div>
+
+  <script>
+    // Snow effect
+    setInterval(() => {
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.innerText = "❄";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }, 150);
+  </script>
+</body>
+</html>
