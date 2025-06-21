@@ -1,270 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>bashW</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      text-align: center;
-    }
-
-    nav {
-      background: #111;
-      padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav button {
-      margin: 0 10px;
-      padding: 10px;
-      background: #222;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    .tab-content {
-      display: none;
-      padding: 20px;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    h1 {
-      font-size: 3em;
-      margin-top: 20vh;
-    }
-
-    /* Game Grid */
-    .game-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .game-card {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
-      width: 250px;
-      padding: 10px;
-    }
-
-    .game-card img {
-      width: 100%;
-      border-radius: 5px;
-    }
-
-    .game-card button {
-      margin-top: 10px;
-      padding: 5px 10px;
-      background: #444;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-    }
-
-    /* Snow */
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      width: 5px;
-      height: 5px;
-      animation: fall linear infinite;
-      z-index: 999;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
+    body { margin:0; background:black; color:white; font-family:Arial,sans-serif; text-align:center; overflow-x:hidden; }
+    nav { background:#111; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; }
+    nav a { color:white; margin:5px 10px; text-decoration:none; padding:5px 10px; border:1px solid transparent; border-radius:5px; }
+    nav a:hover { border-color:white; }
+    h1 { font-size:3em; margin-top:40px; }
+    .snowflake { position:fixed; top:-5%; color:white; user-select:none; pointer-events:none; animation:fall linear infinite; }
+    @keyframes fall { to { transform:translateY(110vh); opacity:0; } }
   </style>
 </head>
 <body>
   <nav>
-    <button onclick="showTab('home')">Home</button>
-    <button onclick="showTab('games')">Games</button>
-    <button onclick="showTab('apps')">Apps</button>
-    <button onclick="showTab('proxy')">Proxy</button>
-    <button onclick="showTab('credits')">Credits</button>
-    <button onclick="showTab('log')">Update Log</button>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+    <a href="log.html">Update Log</a>
   </nav>
+  <h1>Welcome to bashW</h1>
+  <p>Unblock the web with style.</p>
 
-  <div id="home" class="tab-content active">
-    <h1>Welcome to bashW</h1>
-    <p>Unblock the web with style.</p>
-  </div>
-
-  <div id="games" class="tab-content">
-    <h2>Games</h2>
-    <div class="game-grid" id="gameGrid"></div>
-    <div id="gameFrameContainer" style="margin-top: 20px;"></div>
-  </div>
-
-  <div id="apps" class="tab-content">
-    <h2>Apps</h2>
-    <div class="game-grid">
-      <div class="game-card">
-        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png" alt="Google" />
-        <button onclick="openApp('https://www.google.com')">Open Google</button>
-      </div>
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/en/9/98/Discord_logo.svg" alt="Discord" />
-        <button onclick="openApp('https://discord.com')">Open Discord</button>
-      </div>
-      <div class="game-card">
-        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" />
-        <button onclick="openApp('https://github.com')">Open GitHub</button>
-      </div>
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Spotify_icon.svg" alt="Spotify" />
-        <button onclick="openApp('https://open.spotify.com')">Open Spotify</button>
-      </div>
-      <div class="game-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" />
-        <button onclick="openApp('https://www.youtube.com')">Open YouTube</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="proxy" class="tab-content">
-    <h2>Proxy</h2>
-    <iframe src="https://www.google.com/search?igu=1" allowfullscreen></iframe>
-  </div>
-
-  <div id="credits" class="tab-content">
-    <h2>Credits</h2>
-    <p>Made by bashW | Inspired by US4</p>
-  </div>
-
-  <div id="log" class="tab-content">
-    <h2>Update Log</h2>
-    <ul>
-      <li>Added games, apps, and proxy</li>
-      <li>GoGuardian detection with popup</li>
-      <li>Auto snow background effect</li>
-    </ul>
-  </div>
-
-  <!-- Scripts -->
   <script>
-    const games = [
-      {
-        title: "Capybara Clicker Pro",
-        embed: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html",
-        image: "https://www.onlinegames.io/media/posts/554/responsive/Capybara-Clicker-Pro-xs.jpg"
-      },
-      {
-        title: "Masked Special Forces",
-        embed: "https://www.onlinegames.io/games/2022/unity2/masked-special-forces/index.html",
-        image: "https://www.onlinegames.io/media/posts/310/responsive/Masked-Special-Forces-FPS-xs.jpg"
-      }
+    // ❄️ Snowfall
+    function createSnow() {
+      const s = document.createElement('div');
+      s.className = 'snowflake';
+      s.textContent = '❄';
+      s.style.left = Math.random()*100 + 'vw';
+      s.style.fontSize = (10+Math.random()*20)+'px';
+      s.style.animationDuration = (3+Math.random()*4)+'s';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 8000);
+    }
+    setInterval(createSnow, 150);
+
+    // 🛡️ GoGuardian detection
+    const guards = [
+      'haldlgldplgnggkjaafhelgiaglafanh',
+      'kmffehbidlalibfeklaefnckpidbodff',
+      'bepbmhgboaologfdajaanbcjmnhjmhfn'
     ];
-
-    function showTab(tabId) {
-      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-      document.getElementById(tabId).classList.add("active");
-    }
-
-    function openGame(embedUrl) {
-      document.getElementById("gameFrameContainer").innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-    }
-
-    function openApp(url) {
-      location.href = url; // loads in same tab (not new tab)
-    }
-
-    function createSnowflake() {
-      const snowflake = document.createElement("div");
-      snowflake.className = "snowflake";
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      snowflake.style.opacity = Math.random();
-      document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
-    }
-
-    setInterval(createSnowflake, 100);
-
-    // Load games into the grid
-    const gameGrid = document.getElementById("gameGrid");
-    games.forEach(game => {
-      const card = document.createElement("div");
-      card.className = "game-card";
-      card.innerHTML = `
-        <img src="${game.image}" alt="${game.title}">
-        <h4>${game.title}</h4>
-        <button onclick="openGame('${game.embed}')">Play</button>
-      `;
-      gameGrid.appendChild(card);
+    guards.forEach(id => {
+      const img = new Image();
+      img.src = `chrome-extension://${id}/icons/icon128.png`;
+      img.onload = () => { const t = window.open('goguardian.html', '_blank'); if(t) t.blur(); };
     });
-  </script>
-
-  <!-- GoGuardian Detection -->
-  <script>
-    const goGuardianExtensions = [
-      "haldlgldplgnggkjaafhelgiaglafanh",
-      "kmffehbidlalibfeklaefnckpidbodff",
-      "bepbmhgboaologfdajaanbcjmnhjmhfn",
-      "jamhcnnkihinmdlkakkaopbjbbcngflc",
-      "hmendjhbbdimpjlhegagdgdnfkjmhgfk"
-    ];
-
-    function detectGoGuardian() {
-      goGuardianExtensions.forEach(id => {
-        const img = new Image();
-        img.src = `chrome-extension://${id}/icons/icon128.png`;
-
-        img.onload = () => {
-          const popup = document.createElement("div");
-          popup.style.position = "fixed";
-          popup.style.bottom = "20px";
-          popup.style.right = "20px";
-          popup.style.background = "#111";
-          popup.style.color = "#fff";
-          popup.style.border = "1px solid #444";
-          popup.style.padding = "15px";
-          popup.style.zIndex = 9999;
-          popup.style.borderRadius = "8px";
-          popup.style.boxShadow = "0 0 10px #000";
-          popup.innerHTML = `
-            <strong>⚠️ GoGuardian Detected</strong><br>
-            <button id="viewWhyBtn" style="margin-top:8px;background:#222;color:#fff;padding:5px 10px;border:none;border-radius:5px;cursor:pointer;">View Why</button>
-          `;
-          document.body.appendChild(popup);
-
-          document.getElementById("viewWhyBtn").onclick = () => {
-            const tab = window.open("goguardian.html", "_blank");
-            if (tab) tab.blur();
-            popup.remove();
-          };
-        };
-      });
-    }
-
-    if (navigator.userAgent.includes("Chrome")) detectGoGuardian();
   </script>
 </body>
 </html>
