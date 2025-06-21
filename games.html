@@ -2,45 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bashW – Games</title>
-  <link rel="manifest" href="manifest.json">
+  <title>bashW - Games</title>
   <style>
-    body,nav { margin:0; padding:0; }
-    body { background:black; color:white; font-family:Arial,sans-serif; text-align:center; overflow-x:hidden; }
-    nav { background:#111; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; }
-    nav a { color:white; margin:5px 10px; text-decoration:none; padding:5px 10px; border:1px solid transparent; border-radius:5px; }
-    nav a:hover { border-color:white; }
-    h1 { margin:20px 0; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:0 20px 20px; }
-    .card { background:#222; border-radius:8px; overflow:hidden; }
-    .card img { width:100%; }
-    .card button { width:100%; padding:10px; background:#444; border:none; color:white; cursor:pointer; }
-    .snowflake { position:fixed; top:-5%; color:white; user-select:none; pointer-events:none; animation:fall linear infinite; }
-    @keyframes fall { to { transform:translateY(110vh); opacity:0; } }
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .game-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .game-card {
+      background: #222;
+      border-radius: 10px;
+      padding: 10px;
+      width: 250px;
+    }
+    .game-card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .game-card button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <nav>
-    <a href="index.html">Home</a><a href="games.html">Games</a><a href="apps.html">Apps</a>
-    <a href="proxy.html">Proxy</a><a href="apply.html">Apply</a><a href="credits.html">Credits</a><a href="log.html">Update Log</a>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+    <a href="log.html">Update Log</a>
   </nav>
+
   <h1>Games</h1>
-  <div class="grid" id="gameGrid"></div>
-
-  <script>
-    const games = [ /* all your game objects here */ ];
-    const gEl = document.getElementById('gameGrid');
-    games.forEach(g => {
-      const c = document.createElement('div'); c.className = 'card';
-      c.innerHTML = `<img src="${g.image}" alt=""><button>${g.title}</button>`;
-      c.querySelector('button').onclick = () => {
-        window.location = `embed.html?url=${encodeURIComponent(g.embed)}`;
-      };
-      gEl.appendChild(c);
-    });
-
-    function createSnow(){ const s=document.createElement('div'); s.className='snowflake'; s.textContent='❄'; s.style.left= Math.random()*100+'vw'; s.style.fontSize=(10+Math.random()*20)+'px'; s.style.animationDuration=(3+Math.random()*4)+'s'; document.body.appendChild(s); setTimeout(()=>s.remove(),8000);}
-    setInterval(createSnow,150);
-  </script>
+  <div class="game-grid">
+    <!-- Game Card Example -->
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg" alt="Drift Hunters Pro">
+      <button onclick="location.href='embed.html?url=https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html'">Play</button>
+    </div>
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg" alt="Five Nights at Poppy">
+      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html'">Play</button>
+    </div>
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg" alt="Stickman GTA City">
+      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html'">Play</button>
+    </div>
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/990/responsive/Pixel-Driver-xs.jpg" alt="Pixel Driver">
+      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2021/unity3/pixel-driver/index-og.html'">Play</button>
+    </div>
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/697/responsive/Get-on-Top-xs.jpg" alt="Get On Top">
+      <button onclick="location.href='embed.html?url=https://www.onlinegames.io/games/2024/code/6/get-on-top/index.html'">Play</button>
+    </div>
+    <div class="game-card">
+      <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
+      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html'">Play</button>
+    </div>
+    <!-- Add more games below in the same format -->
+  </div>
 </body>
 </html>
