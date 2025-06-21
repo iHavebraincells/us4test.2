@@ -1,9 +1,7 @@
-<!-- [START OF HTML FILE] -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>bashW</title>
   <style>
     body {
@@ -12,21 +10,23 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
+      overflow-x: hidden;
     }
     nav {
       background: #111;
       padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
       position: sticky;
       top: 0;
+      z-index: 1000;
     }
     nav button {
-      margin: 5px;
-      padding: 10px 15px;
-      background: #222;
+      background: #333;
       color: white;
       border: none;
-      border-radius: 5px;
+      padding: 10px 20px;
       cursor: pointer;
     }
     .tab-content {
@@ -36,52 +36,61 @@
     .tab-content.active {
       display: block;
     }
-    .iframe-container {
-      width: 100%;
-      height: 600px;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .app-grid {
+    .game-grid, .app-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
-    .app-card {
+    .game-card, .app-card {
       background: #222;
-      padding: 15px;
-      width: 250px;
+      border: 1px solid #444;
       border-radius: 10px;
-      cursor: pointer;
-      border: 1px solid #333;
+      width: 220px;
+      padding: 10px;
+      text-align: center;
     }
-    .app-card:hover {
-      background: #333;
+    .game-card img, .app-card img {
+      width: 100%;
+      border-radius: 8px;
     }
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      z-index: 9999;
+    .game-card button, .app-card button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #444;
+      border: none;
       color: white;
-      user-select: none;
-      pointer-events: none;
-      animation: fall linear infinite;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
     }
     @keyframes fall {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(100vh); opacity: 0; }
+    }
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      font-size: 1.2em;
+      animation: fall linear infinite;
     }
   </style>
 </head>
 <body>
   <nav>
     <button onclick="showTab('home')">Home</button>
+    <button onclick="showTab('games')">Games</button>
     <button onclick="showTab('apps')">Apps</button>
-    <button onclick="showTab('apply')">Apply</button>
+    <button onclick="showTab('proxy')">Proxy</button>
+    <button onclick="showTab('credits')">Credits</button>
+    <button onclick="showTab('settings')">Settings</button>
+    <button onclick="showTab('log')">Update Log</button>
+    <button onclick="showTab('apply')">Application</button>
   </nav>
 
   <div id="home" class="tab-content active">
@@ -89,55 +98,139 @@
     <p>Unblock the web with style.</p>
   </div>
 
+  <div id="games" class="tab-content">
+    <h1>Games</h1>
+    <div class="game-grid" id="gameGrid"></div>
+    <div id="gameFrameContainer" style="margin-top:20px;"></div>
+  </div>
+
   <div id="apps" class="tab-content">
-    <h2>Apps</h2>
-    <div class="app-grid">
-      <div class="app-card" onclick="loadApp('https://www.google.com/search?igu=1')">Google</div>
-      <div class="app-card" onclick="loadApp('https://discord.com')">Discord</div>
-      <div class="app-card" onclick="loadApp('https://github.com')">GitHub</div>
-      <div class="app-card" onclick="loadApp('https://youtube.com')">YouTube</div>
-      <div class="app-card" onclick="loadApp('https://spotify.com')">Spotify</div>
-    </div>
-    <div class="iframe-container" id="appFrameContainer"></div>
+    <h1>Apps</h1>
+    <div class="app-grid" id="appGrid"></div>
+    <div id="appFrameContainer" style="margin-top:20px;"></div>
+  </div>
+
+  <div id="proxy" class="tab-content">
+    <h1>Proxy Browser</h1>
+    <iframe src="https://search.brave.com" title="Built-in Proxy"></iframe>
+  </div>
+
+  <div id="credits" class="tab-content">
+    <h1>Credits</h1>
+    <p>Built with ❤️ by the bashW team.</p>
+  </div>
+
+  <div id="settings" class="tab-content">
+    <h1>Settings</h1>
+    <p>Snow background is active. More options coming soon.</p>
+  </div>
+
+  <div id="log" class="tab-content">
+    <h1>Update Log</h1>
+    <ul>
+      <li>✅ All-in-one HTML setup</li>
+      <li>✅ Added apps & games</li>
+      <li>✅ Application form live</li>
+      <li>✅ Built-in proxy tab added</li>
+    </ul>
   </div>
 
   <div id="apply" class="tab-content">
-    <h2>Apply to Join bashW</h2>
+    <h1>Apply to Join bashW</h1>
     <form action="https://formspree.io/f/xkgbvvzq" method="POST">
-      <label for="name">Name:</label><br>
-      <input type="text" name="name" required><br><br>
-      <label for="email">Email:</label><br>
-      <input type="email" name="email" required><br><br>
-      <label for="message">Why do you want to join?</label><br>
-      <textarea name="message" rows="5" required></textarea><br><br>
+      <input type="text" name="name" placeholder="Your name" required><br><br>
+      <input type="email" name="email" placeholder="Your email" required><br><br>
+      <textarea name="message" placeholder="Why should we pick you?" required></textarea><br><br>
       <button type="submit">Submit</button>
     </form>
   </div>
 
   <script>
-    function showTab(id) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+      document.getElementById('gameFrameContainer').innerHTML = '';
+      document.getElementById('appFrameContainer').innerHTML = '';
+    }
+
+    const games = [
+      {
+        title: "Basket Hoop",
+        embed: "https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html",
+        image: "https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg"
+      },
+      {
+        title: "Drift Hunters Pro",
+        embed: "https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html",
+        image: "https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg"
+      }
+    ];
+    const apps = [
+      {
+        title: "Google",
+        embed: "https://www.google.com/webhp?igu=1",
+        image: "https://www.google.com/favicon.ico"
+      },
+      {
+        title: "Discord",
+        embed: "https://discord.com/app",
+        image: "https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico"
+      },
+      {
+        title: "GitHub",
+        embed: "https://github.com",
+        image: "https://github.githubassets.com/favicons/favicon.png"
+      }
+    ];
+    const gameGrid = document.getElementById('gameGrid');
+    const appGrid = document.getElementById('appGrid');
+    const gameFrameContainer = document.getElementById('gameFrameContainer');
+    const appFrameContainer = document.getElementById('appFrameContainer');
+
+    games.forEach(game => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.innerHTML = `
+        <img src="${game.image}" alt="${game.title}" />
+        <h3>${game.title}</h3>
+        <button onclick="loadGame('${game.embed}')">Play</button>
+      `;
+      gameGrid.appendChild(card);
+    });
+
+    apps.forEach(app => {
+      const card = document.createElement('div');
+      card.className = 'app-card';
+      card.innerHTML = `
+        <img src="${app.image}" alt="${app.title}" />
+        <h3>${app.title}</h3>
+        <button onclick="loadApp('${app.embed}')">Launch</button>
+      `;
+      appGrid.appendChild(card);
+    });
+
+    function loadGame(url) {
+      gameFrameContainer.innerHTML = `<iframe src="${url}"></iframe>`;
     }
 
     function loadApp(url) {
-      const container = document.getElementById('appFrameContainer');
-      container.innerHTML = '<iframe src="' + url + '"></iframe>';
+      appFrameContainer.innerHTML = `<iframe src="${url}"></iframe>`;
     }
 
-    function createSnowflake() {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.textContent = "❄";
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
+    // Snow effect
+    for (let i = 0; i < 50; i++) {
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+      snow.innerHTML = '❄';
+      snow.style.left = Math.random() * 100 + 'vw';
+      snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snow.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snow.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(snow);
     }
-
-    setInterval(createSnowflake, 100);
   </script>
 </body>
 </html>
-<!-- [END OF HTML FILE] -->
+
