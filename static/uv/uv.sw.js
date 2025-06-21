@@ -1,9 +1,15 @@
-window.__uv$config = {
-  prefix: '/service/',
-  encodeUrl: Ultraviolet.codec.xor.encode,
-  decodeUrl: Ultraviolet.codec.xor.decode,
-};window.__uv$config = {
-  prefix: '/service/',
-  encodeUrl: Ultraviolet.codec.xor.encode,
-  decodeUrl: Ultraviolet.codec.xor.decode,
-};
+importScripts('/static/uv/uv.bundle.js');
+importScripts('/static/uv/uv.config.js');
+
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  if (!url.pathname.startsWith(self.__uv$config.prefix)) {
+    return; // ignore non-proxy requests
+  }
+  
+  const target = self.__uv$config.decodeUrl(
+    url.pathname.slice(self.__uv$config.prefix.length)
+  );
+  
+  event.respondWith(fetch(target));
+});
