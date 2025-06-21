@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>bashW – Credits</title>
+  <meta charset="UTF-8" />
+  <title>bashW - Credits</title>
   <style>
     body {
       margin: 0;
@@ -14,34 +14,25 @@
     nav {
       background: #111;
       padding: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav a {
       color: white;
-      margin: 5px 10px;
+      margin: 0 15px;
       text-decoration: none;
-      padding: 5px 10px;
-      border: 1px solid transparent;
-      border-radius: 5px;
+      font-weight: bold;
     }
-    nav a:hover {
-      border-color: white;
+    .content {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
     }
-    .snowflake {
-      position: fixed;
-      top: -5%;
-      color: white;
-      user-select: none;
-      pointer-events: none;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+    h1, h2 {
+      color: #00ffff;
     }
   </style>
 </head>
@@ -56,37 +47,63 @@
     <a href="log.html">Update Log</a>
   </nav>
 
-  <h1>Credits</h1>
-  <p>Developed by bashW Team</p>
-  <p>Powered by Ultraviolet Proxy</p>
-  <p>Games provided by onlinegames.io</p>
-  <p>Snow effect and this whole site inspired by US4</p>
+  <div class="content">
+    <h1>Credits</h1>
+    <p>Special thanks to everyone who contributed to bashW.</p>
+    <h2>Contributors</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li><strong>bash</strong> – Creator and lead developer</li>
+      <li><strong>OpenGame sites</strong> – Game hosting</li>
+      <li><strong>Ultraviolet</strong> – Proxy engine</li>
+      <li><strong>Formspree</strong> – Form processing</li>
+    </ul>
+    <h2>Tech Stack</h2>
+    <p>HTML, CSS, JavaScript, Ultraviolet Proxy, GitHub Pages</p>
+  </div>
 
+  <!-- Optional Snow -->
   <script>
-    function createSnow() {
-      const s = document.createElement('div');
-      s.className = 'snowflake';
-      s.textContent = '❄';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (10 + Math.random() * 20) + 'px';
-      s.style.animationDuration = (3 + Math.random() * 4) + 's';
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 8000);
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.textContent = '❄';
+      snowflake.style.position = 'fixed';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.top = '-2em';
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
     }
-    setInterval(createSnow, 150);
 
-    // GoGuardian detection
+    setInterval(createSnowflake, 200);
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  <!-- GoGuardian Detection -->
+  <script>
     const goGuardianExtensions = [
       "haldlgldplgnggkjaafhelgiaglafanh",
       "kmffehbidlalibfeklaefnckpidbodff",
       "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
+
     goGuardianExtensions.forEach(id => {
       const img = new Image();
       img.src = `chrome-extension://${id}/icons/icon128.png`;
       img.onload = () => {
-        const tab = window.open("goguardian.html", "_blank");
-        if (tab) tab.blur();
+        const w = window.open("goguardian.html", "_blank");
+        if (w) w.blur();
       };
     });
   </script>
