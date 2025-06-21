@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>bashW – Proxy</title>
-<script>
-  window.location = 'embed.html?url=' + encodeURIComponent('https://www.google.com');
-</script>
+<head>
+  <meta charset="UTF-8" />
+  <title>bashW - Proxy</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #uv-frame {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
 </head>
-<body style="background:black;color:white;text-align:center;font-family:Arial,sans-serif;">
-  <h1>Launching Proxy…</h1>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+    <a href="log.html">Update Log</a>
+  </nav>
+
+  <h1>Proxy</h1>
+  <p>Use the search bar below to browse the internet through our built-in proxy.</p>
+
+  <form id="uv-form">
+    <input id="uv-search" type="text" placeholder="Search or URL" style="padding: 10px; width: 60%; max-width: 500px;">
+    <button type="submit" style="padding: 10px;">Go</button>
+  </form>
+
+  <iframe id="uv-frame" src="embed.html?url=https://www.google.com/search?igu=1"></iframe>
+
+  <script>
+    const form = document.getElementById('uv-form');
+    const input = document.getElementById('uv-search');
+    const frame = document.getElementById('uv-frame');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      const url = query.startsWith('http') ? query : 'https://www.google.com/search?q=' + encodeURIComponent(query);
+      frame.src = 'embed.html?url=' + encodeURIComponent(url);
+    });
+  </script>
+
+  <!-- Optional Snowflakes -->
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.textContent = '❄';
+      snowflake.style.position = 'fixed';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.top = '-2em';
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
+    }
+
+    setInterval(createSnowflake, 200);
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  <!-- GoGuardian Detection -->
+  <script>
+    const goGuardianExtensions = [
+      "haldlgldplgnggkjaafhelgiaglafanh",
+      "kmffehbidlalibfeklaefnckpidbodff",
+      "bepbmhgboaologfdajaanbcjmnhjmhfn"
+    ];
+
+    goGuardianExtensions.forEach(id => {
+      const img = new Image();
+      img.src = `chrome-extension://${id}/icons/icon128.png`;
+      img.onload = () => {
+        const w = window.open("goguardian.html", "_blank");
+        if (w) w.blur();
+      };
+    });
+  </script>
 </body>
 </html>
+
