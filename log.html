@@ -11,55 +11,31 @@
       font-family: Arial, sans-serif;
       text-align: center;
     }
-
     nav {
       background: #111;
       padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-
     nav a {
       color: white;
-      margin: 0 10px;
+      margin: 0 15px;
       text-decoration: none;
+      font-weight: bold;
     }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 2.5em;
-    }
-
-    .log-list {
-      margin: 30px auto;
-      max-width: 700px;
-      background: #111;
-      padding: 20px;
+    .content {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #222;
+      padding: 30px;
       border-radius: 10px;
+    }
+    h1 {
+      color: #00ffff;
+    }
+    ul {
       text-align: left;
-    }
-
-    .log-list ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-
-    .log-list li {
-      margin-bottom: 12px;
-    }
-
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      color: white;
-      font-size: 1em;
-      user-select: none;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
     }
   </style>
 </head>
@@ -74,30 +50,64 @@
     <a href="log.html">Update Log</a>
   </nav>
 
-  <h1>Update Log</h1>
-  <div class="log-list">
+  <div class="content">
+    <h1>Update Log</h1>
     <ul>
-      <li>✅ Added multipage support (index, games, apps, proxy, credits, apply)</li>
-      <li>✅ Ultraviolet proxy support added to proxy.html</li>
-      <li>✅ Added application form in apply.html (Formspree integrated)</li>
-      <li>✅ Embedded over 30 working browser games (games.html)</li>
-      <li>✅ Apps now open in a new page with dynamic proxy loading</li>
-      <li>✅ Snow effect added to all pages</li>
-      <li>✅ GoGuardian detection tab planned</li>
+      <li><strong>v1.0</strong> – Initial bashW project launch</li>
+      <li><strong>v1.1</strong> – Added games and apps pages</li>
+      <li><strong>v1.2</strong> – Embedded working UV proxy</li>
+      <li><strong>v1.3</strong> – Snow effect and improved styling</li>
+      <li><strong>v1.4</strong> – GoGuardian detection system</li>
+      <li><strong>v1.5</strong> – Application page and embed system</li>
+      <li><strong>v1.6</strong> – Grid-based layout and improved loading</li>
     </ul>
   </div>
 
+  <!-- Snow Effect -->
   <script>
-    // Snowfall
-    setInterval(() => {
-      const snowflake = document.createElement("div");
-      snowflake.className = "snowflake";
-      snowflake.style.left = Math.random() * 100 + "vw";
-      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-      snowflake.innerText = "❄";
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.textContent = '❄';
+      snowflake.style.position = 'fixed';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.top = '-2em';
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
       document.body.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), 5000);
-    }, 150);
+      setTimeout(() => snowflake.remove(), 10000);
+    }
+
+    setInterval(createSnowflake, 200);
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  <!-- GoGuardian Detection -->
+  <script>
+    const goGuardianExtensions = [
+      "haldlgldplgnggkjaafhelgiaglafanh",
+      "kmffehbidlalibfeklaefnckpidbodff",
+      "bepbmhgboaologfdajaanbcjmnhjmhfn"
+    ];
+
+    goGuardianExtensions.forEach(id => {
+      const img = new Image();
+      img.src = `chrome-extension://${id}/icons/icon128.png`;
+      img.onload = () => {
+        const w = window.open("goguardian.html", "_blank");
+        if (w) w.blur();
+      };
+    });
   </script>
 </body>
 </html>
