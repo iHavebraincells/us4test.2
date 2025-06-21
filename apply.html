@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bashW - Apply</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    nav {
+      background: #111;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      background: #222;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+  </nav>
+
+  <h1>Apply to Join bashW</h1>
+  <p>Fill out the form below to apply for a position on the team.</p>
+
+  <form action="https://formspree.io/f/xkgbvvzq" method="POST">
+    <label for="name">Your Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Your Email</label>
+    <input type="email" id="email" name="_replyto" required>
+
+    <label for="role">What role are you applying for?</label>
+    <input type="text" id="role" name="role" required>
+
+    <label for="why">Why do you want to join?</label>
+    <textarea id="why" name="why" rows="5" required></textarea>
+
+    <button type="submit">Submit Application</button>
+  </form>
+
+  <script>
+    // Snow effect
+    setInterval(() => {
+      const snowflake = document.createElement("div");
+      snowflake.className = "snowflake";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.innerText = "❄";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }, 150);
+  </script>
+</body>
+</html>
