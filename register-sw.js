@@ -1,4 +1,3 @@
-// register-sw.js
-navigator.serviceWorker.register('./static/uv/uv.sw.js', {
-  scope: __uv$config.prefix
-});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('static/uv/uv.sw.js', { scope: '/service/' });
+}
