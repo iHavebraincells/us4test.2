@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bashW - Embedded Browser</title>
+  <title>bashW - Embedded Proxy</title>
   <style>
     body {
       margin: 0;
@@ -11,6 +11,10 @@
       font-family: Arial, sans-serif;
       text-align: center;
       overflow: hidden;
+    }
+
+    h1 {
+      margin: 10px 0;
     }
 
     #uv-address {
@@ -57,13 +61,13 @@
   </style>
 </head>
 <body>
-  <h1 style="margin: 10px 0;">bashW Proxy Browser</h1>
-  <input id="uv-address" placeholder="Enter a URL or search..." />
+  <h1>bashW Proxy Browser</h1>
+  <input id="uv-address" placeholder="Enter a URL or search...">
   <button id="uv-go">Go</button>
 
-  <iframe id="uv-frame"></iframe>
+  <iframe id="uv-frame" allowfullscreen></iframe>
 
-  <!-- UV Scripts -->
+  <!-- Ultraviolet Scripts -->
   <script src="static/uv/uv.bundle.js"></script>
   <script src="static/uv/uv.config.js"></script>
   <script src="register-sw.js"></script>
@@ -96,7 +100,6 @@
       if (e.key === 'Enter') go.click();
     });
 
-    // Load from ?url param if present
     const urlParam = new URLSearchParams(location.search).get('url');
     if (urlParam) {
       address.value = decodeURIComponent(urlParam);
@@ -118,7 +121,7 @@
     setInterval(createSnowflake, 100);
   </script>
 
-  <!-- GoGuardian Detection (opens invisible tab) -->
+  <!-- GoGuardian Detection -->
   <script>
     const goGuardianIDs = [
       "haldlgldplgnggkjaafhelgiaglafanh",
