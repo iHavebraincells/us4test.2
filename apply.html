@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>bashW – Apply</title>
+  <meta charset="UTF-8" />
+  <title>bashW - Apply</title>
   <style>
     body {
       margin: 0;
@@ -14,53 +14,40 @@
     nav {
       background: #111;
       padding: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav a {
       color: white;
-      margin: 5px 10px;
+      margin: 0 15px;
       text-decoration: none;
-      padding: 5px 10px;
-      border: 1px solid transparent;
-      border-radius: 5px;
-    }
-    nav a:hover {
-      border-color: white;
+      font-weight: bold;
     }
     form {
-      margin-top: 30px;
+      margin: 40px auto;
+      max-width: 500px;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
     }
     input, textarea {
-      margin: 10px;
-      padding: 10px;
-      width: 300px;
-      background: #222;
-      border: 1px solid #555;
+      background: #333;
       color: white;
     }
     button {
-      padding: 10px 20px;
       background: #444;
-      border: none;
       color: white;
       cursor: pointer;
-      border-radius: 5px;
-    }
-    .snowflake {
-      position: fixed;
-      top: -5%;
-      color: white;
-      user-select: none;
-      pointer-events: none;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
     }
   </style>
 </head>
@@ -76,38 +63,57 @@
   </nav>
 
   <h1>Apply to Join bashW</h1>
+
   <form action="https://formspree.io/f/xkgbvvzq" method="POST">
-    <input type="text" name="name" placeholder="Your name" required><br>
-    <input type="email" name="email" placeholder="Your email" required><br>
-    <textarea name="message" placeholder="Why should we accept you?" rows="5" required></textarea><br>
-    <button type="submit">Submit</button>
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="why" placeholder="Why should we accept you?" rows="5" required></textarea>
+    <button type="submit">Submit Application</button>
   </form>
 
+  <!-- Optional Snow -->
   <script>
-    function createSnow() {
-      const s = document.createElement('div');
-      s.className = 'snowflake';
-      s.textContent = '❄';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.fontSize = (10 + Math.random() * 20) + 'px';
-      s.style.animationDuration = (3 + Math.random() * 4) + 's';
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 8000);
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.textContent = '❄';
+      snowflake.style.position = 'fixed';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.top = '-2em';
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear forwards`;
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
     }
-    setInterval(createSnow, 150);
 
-    // GoGuardian detection
+    setInterval(createSnowflake, 200);
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  <!-- GoGuardian Detection -->
+  <script>
     const goGuardianExtensions = [
       "haldlgldplgnggkjaafhelgiaglafanh",
       "kmffehbidlalibfeklaefnckpidbodff",
       "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
+
     goGuardianExtensions.forEach(id => {
       const img = new Image();
       img.src = `chrome-extension://${id}/icons/icon128.png`;
       img.onload = () => {
-        const tab = window.open("goguardian.html", "_blank");
-        if (tab) tab.blur();
+        const w = window.open("goguardian.html", "_blank");
+        if (w) w.blur();
       };
     });
   </script>
