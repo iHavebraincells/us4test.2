@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bashW - Apps</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+    }
+    nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    .app-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .app-card {
+      background: #222;
+      border-radius: 10px;
+      padding: 10px;
+      width: 250px;
+    }
+    .app-card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .app-card button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">Apps</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="apply.html">Apply</a>
+    <a href="credits.html">Credits</a>
+  </nav>
+
+  <h1>Apps</h1>
+  <div class="app-grid">
+    <div class="app-card">
+      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
+      <button onclick="window.location.href='https://www.google.com/search?igu=1'">Open Google</button>
+    </div>
+    <div class="app-card">
+      <img src="https://www.youtube.com/s/desktop/f6e232f1/img/favicon_144x144.png" alt="YouTube">
+      <button onclick="window.location.href='https://www.youtube.com'">Open YouTube</button>
+    </div>
+    <div class="app-card">
+      <img src="https://spotify.com/favicon.ico" alt="Spotify">
+      <button onclick="window.location.href='https://open.spotify.com'">Open Spotify</button>
+    </div>
+    <div class="app-card">
+      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
+      <button onclick="window.location.href='https://github.com'">Open GitHub</button>
+    </div>
+    <div class="app-card">
+      <img src="https://styles.redditmedia.com/t5_2qh33/styles/communityIcon_t7fozwx1l0pa1.png" alt="Discord (Note)">
+      <button onclick="alert('Discord cannot be embedded. It must be opened manually.');">Discord Not Embeddable</button>
+    </div>
+  </div>
+</body>
+</html>
