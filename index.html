@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>bashW</title>
-  <link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8" />
+  <title>bashW - Home</title>
   <style>
-    body { margin:0; background:black; color:white; font-family:Arial,sans-serif; text-align:center; overflow-x:hidden; }
-    nav { background:#111; padding:10px; display:flex; justify-content:center; flex-wrap:wrap; }
-    nav a { color:white; margin:5px 10px; text-decoration:none; padding:5px 10px; border:1px solid transparent; border-radius:5px; }
-    nav a:hover { border-color:white; }
-    h1 { font-size:3em; margin-top:40px; }
-    .snowflake { position:fixed; top:-5%; color:white; user-select:none; pointer-events:none; animation:fall linear infinite; }
-    @keyframes fall { to { transform:translateY(110vh); opacity:0; } }
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    nav {
+      background: #111;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    h1 {
+      margin-top: 20vh;
+      font-size: 3em;
+    }
+    #snow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      user-select: none;
+      font-size: 1em;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -24,33 +63,41 @@
     <a href="credits.html">Credits</a>
     <a href="log.html">Update Log</a>
   </nav>
+
   <h1>Welcome to bashW</h1>
   <p>Unblock the web with style.</p>
 
-  <script>
-    // ❄️ Snowfall
-    function createSnow() {
-      const s = document.createElement('div');
-      s.className = 'snowflake';
-      s.textContent = '❄';
-      s.style.left = Math.random()*100 + 'vw';
-      s.style.fontSize = (10+Math.random()*20)+'px';
-      s.style.animationDuration = (3+Math.random()*4)+'s';
-      document.body.appendChild(s);
-      setTimeout(()=>s.remove(), 8000);
-    }
-    setInterval(createSnow, 150);
+  <div id="snow-container"></div>
 
-    // 🛡️ GoGuardian detection
-    const guards = [
-      'haldlgldplgnggkjaafhelgiaglafanh',
-      'kmffehbidlalibfeklaefnckpidbodff',
-      'bepbmhgboaologfdajaanbcjmnhjmhfn'
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄';
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animationDuration = (2 + Math.random() * 3) + 's';
+      snowflake.style.fontSize = (10 + Math.random() * 20) + 'px';
+      document.getElementById('snow-container').appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }
+    setInterval(createSnowflake, 100);
+  </script>
+
+  <script>
+    const extensionIds = [
+      "haldlgldplgnggkjaafhelgiaglafanh", // GoGuardian
+      "jamhcnnkihinmdlkakkaopbjbbcngflc",
+      "hmendjhbbdimpjlhegagdgdnfkjmhgfk",
+      "kmffehbidlalibfeklaefnckpidbodff",
+      "bepbmhgboaologfdajaanbcjmnhjmhfn"
     ];
-    guards.forEach(id => {
+    extensionIds.forEach((id) => {
       const img = new Image();
       img.src = `chrome-extension://${id}/icons/icon128.png`;
-      img.onload = () => { const t = window.open('goguardian.html', '_blank'); if(t) t.blur(); };
+      img.onload = () => {
+        const w = window.open("goguardian.html", "_blank");
+        if (w) w.blur(); // hide background tab
+      };
     });
   </script>
 </body>
