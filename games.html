@@ -14,41 +14,36 @@
     nav {
       background: #111;
       padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
     nav a {
       color: white;
-      margin: 0 15px;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
     }
-    .game-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
       padding: 20px;
     }
-    .game-card {
+    .games-grid a {
       background: #222;
+      border: 1px solid #444;
       border-radius: 10px;
       padding: 10px;
-      width: 250px;
-    }
-    .game-card img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .game-card button {
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #444;
+      text-decoration: none;
       color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      display: block;
+      transition: background 0.3s;
+    }
+    .games-grid a:hover {
+      background: #333;
+    }
+    .games-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -58,40 +53,26 @@
     <a href="games.html">Games</a>
     <a href="apps.html">Apps</a>
     <a href="proxy.html">Proxy</a>
-    <a href="exthang3r.html">ExtHang3r</a>
     <a href="apply.html">Apply</a>
     <a href="credits.html">Credits</a>
-    <a href="log.html">Update Log</a>
   </nav>
 
-  <h1>Games</h1>
-  <div class="game-grid">
-    <!-- Game Card Example -->
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/397/responsive/Drift-Hunters-Pro-xs.jpg" alt="Drift Hunters Pro">
-      <button onclick="location.href='embed.html?url=https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html'">Play</button>
-    </div>
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/992/responsive/Five-Nights-at-Poppy-xs.jpg" alt="Five Nights at Poppy">
-      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2025/unity2/five-nights-at-poppy/index-og.html'">Play</button>
-    </div>
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/900/responsive/stickman-gta-city-free-xs.jpg" alt="Stickman GTA City">
-      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html'">Play</button>
-    </div>
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/990/responsive/Pixel-Driver-xs.jpg" alt="Pixel Driver">
-      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2021/unity3/pixel-driver/index-og.html'">Play</button>
-    </div>
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/697/responsive/Get-on-Top-xs.jpg" alt="Get On Top">
-      <button onclick="location.href='embed.html?url=https://www.onlinegames.io/games/2024/code/6/get-on-top/index.html'">Play</button>
-    </div>
-    <div class="game-card">
-      <img src="https://www.onlinegames.io/media/posts/843/responsive/Basket-Hoop-xs.jpg" alt="Basket Hoop">
-      <button onclick="location.href='embed.html?url=https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html'">Play</button>
-    </div>
-    <!-- Add more games below in the same format -->
+  <h1>bashW Games</h1>
+  <div class="games-grid">
+    <a href="embed.html?url=https://onlinegames.io/game/retro-bowl">
+      <img src="https://onlinegames.io/uploads/game/retro-bowl.png" alt="Retro Bowl">
+      <div>Retro Bowl</div>
+    </a>
+
+    <a href="embed.html?url=https://onlinegames.io/game/geometry-dash">
+      <img src="https://onlinegames.io/uploads/game/geometry-dash.png" alt="Geometry Dash">
+      <div>Geometry Dash</div>
+    </a>
+
+    <a href="embed.html?url=https://onlinegames.io/game/hary-stickman">
+      <img src="https://onlinegames.io/uploads/game/hary-stickman.png" alt="Harry Stickman">
+      <div>Harry Stickman</div>
+    </a>
   </div>
 </body>
 </html>
