@@ -1,84 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>bashW - ExtHang3r</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExtHang3r</title>
+  <link rel="shortcut icon" href="favicon.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: white;
+      font-family: 'Varela Round', sans-serif;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      background-color: #121212;
+      color: #ffffff;
     }
-    nav {
-      background: #111;
-      padding: 10px;
+
+    header {
+      background-color: #1f1f1f;
+      color: #ffffff;
+      padding: 10px 20px;
       text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    nav a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
     }
-    .snowflake {
+
+    .container {
+      max-width: 800px;
+      margin: 100px auto 0 auto;
+      padding: 20px;
+      text-align: center;
+      background: #1f1f1f;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    select, button, input[type="range"] {
+      font-family: 'Varela Round', sans-serif;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    select {
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      width: 100%;
+      background-color: #2c2c2c;
+      color: #ffffff;
+    }
+
+    button {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e0e0e0;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      background: #ffffff;
+      border-radius: 5px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb,
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #000000;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .overlay {
       position: fixed;
       top: 0;
-      background: white;
-      border-radius: 50%;
-      width: 5px;
-      height: 5px;
-      animation: fall linear infinite;
-      z-index: 9999;
-    }
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
-    iframe {
+      left: 0;
       width: 100%;
-      height: calc(100vh - 60px);
-      border: none;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      color: #ffffff;
+      font-size: 24px;
+      flex-direction: column;
+    }
+
+    .spinner {
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #killExtensionText {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      background: #2c2c2c;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #killButton {
+      display: none;
+    }
+
+    footer {
+      background-color: #1f1f1f;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
-<body>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="games.html">Games</a>
-    <a href="apps.html">Apps</a>
-    <a href="proxy.html">Proxy</a>
-    <a href="exthang3r.html">ExtHang3r</a>
-    <a href="apply.html">Apply</a>
-    <a href="credits.html">Credits</a>
-  </nav>
 
-  <iframe src="https://raw.githubusercontent.com/Blobby-Boi/ExtHang3r/main/index.html"></iframe>
+<body>
+  <header>
+    <img src="favicon.png" alt="Logo" class="logo">
+    <h1>ExtHang3r</h1>
+  </header>
+
+  <div class="container">
+    <p>This was designed By PulsarPulse - Made by Blobby-Boi</p>
+    <label for="iframeSelect">Choose Your Extension:</label>
+    <select id="iframeSelect"></select>
+
+    <label for="iframeCountSlider">Select iframe load count</label>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <input type="range" id="iframeCountSlider" min="100" max="15000" value="2000" step="100">
+      <span id="iframeCountValue">2000</span>
+    </div>
+
+    <button onclick="warning();" id="hangButton">Hang Extension</button>
+    <button id="killButton" onclick="openExtensionPopup();">Kill it.</button>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="spinner"></div>
+    <p>Just wait 1–5 mins...</p>
+  </div>
+
+  <div id="killExtensionText"></div>
+
+  <footer>
+    <p>Made By: <a href="https://openprocessing.org/user/506191?view=sketches">PulsarPulse</a></p>
+  </footer>
 
   <script>
-    // ❄️ Snow effect
-    function snow() {
-      const s = document.createElement("div");
-      s.className = "snowflake";
-      s.style.left = Math.random() * window.innerWidth + "px";
-      s.style.animationDuration = 2 + Math.random() * 3 + "s";
-      s.style.opacity = Math.random();
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 5000);
-    }
-    setInterval(snow, 100);
+    const slider = document.getElementById("iframeCountSlider");
+    const countDisplay = document.getElementById("iframeCountValue");
+    slider.oninput = () => countDisplay.textContent = slider.value;
 
-    // 🛡️ GoGuardian detection
-    ['haldlgldplgnggkjaafhelgiaglafanh','kmffehbidlalibfeklaefnckpidbodff','bepbmhgboaologfdajaanbcjmnhjmhfn']
-      .forEach(id => {
-        const img = new Image();
-        img.src = `chrome-extension://${id}/icons/icon128.png`;
-        img.onload = () => {
-          const w = window.open("goguardian.html", "_blank");
-          if (w) w.blur();
-        };
-      });
+    async function checkURL(url) {
+      try {
+        const res = await fetch(url);
+        return res.ok;
+      } catch { return false; }
+    }
+
+    async function populateSelect() {
+      const select = document.getElementById("iframeSelect");
+      const extensions = {
+        "GoGuardian": "chrome-extension://haldlgldplgnggkjaafhelgiaglafanh/youtube_injection.js",
+        "Securly": "chrome-extension://iheobagjkfklnlikgihanlhcddjoihkg/fonts/Metropolis.css",
+        "Blocksi": "chrome-extension://ghlpmldmjjhmdgmneoaibbegkjjbonbk/pages/blockPage.html"
+        // Add more here if needed
+      };
+
+      for (const [name, url] of Object.entries(extensions)) {
+        if (await checkURL(url)) {
+          const opt = document.createElement("option");
+          opt.value = url;
+          opt.textContent = name;
+          select.appendChild(opt);
+        }
+      }
+    }
+
+    function replaceIframes(container, src, count) {
+      for (let i = 0; i < count; i++) {
+        const iframe = document.createElement("iframe");
+        iframe.src = src;
+        iframe.style.width = "100%";
+        iframe.style.height = "100px";
+        container.appendChild(iframe);
+      }
+
+      setTimeout(() => {
+        while (container.firstChild) container.removeChild(container.firstChild);
+        replaceIframes(container, src, count);
+      }, 5);
+    }
+
+    function warning() {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = "flex";
+
+      const src = document.getElementById("iframeSelect").value;
+      const count = parseInt(slider.value);
+      const popup = window.open("", "PopupWindow", "width=100,height=100");
+      const container = popup.document.createElement("div");
+      popup.document.body.appendChild(container);
+
+      replaceIframes(container, src, count);
+
+      setTimeout(() => {
+        popup.close();
+        overlay.style.display = "none";
+        document.getElementById("killExtensionText").innerHTML =
+          "Extension is hanging. Press the button above to finalize.";
+        document.getElementById("killButton").style.display = "inline-block";
+        document.getElementById("killButton").dataset.url = src;
+      }, 10000);
+    }
+
+    function openExtensionPopup() {
+      const src = document.getElementById("killButton").dataset.url;
+      const extId = src.split("/")[2];
+      document.getElementById("killExtensionText").innerHTML =
+        `Go to <strong>chrome://extensions/?id=${extId}</strong> and flip the “Allow file access” switch twice.`;
+      window.location.href = src;
+    }
+
+    populateSelect();
   </script>
 </body>
 </html>
